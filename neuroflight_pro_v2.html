@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+   <title>QOLDA Dombra Static Rhythm</title>
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
+
+   <style>
+      :root {
+         --bg: #FAFCF9;
+         --text: #141B14;
+         --muted: #5A6A5A;
+         --green: #D9EDB8;
+         --green2: #A9D96B;
+         --green-dark: #123126;
+         --card: #FFFFFF;
+         --line: #E7EFE2;
+         --danger: #D96C6C;
+         --gold: #F0BC4A;
+         --blue: #6E9BFF;
+         --shadow: 0 24px 70px rgba(18, 49, 38, .09);
+      }
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         font-family: 'Outfit', sans-serif
+      }
+
+      body {
+         min-height: 100vh;
+         overflow: hidden;
+         background:
+            radial-gradient(circle at 10% 10%, rgba(217, 237, 184, .72), transparent 24%),
+            radial-gradient(circle at 90% 8%, rgba(223, 240, 208, .72), transparent 22%),
+            linear-gradient(180deg, #FBFDF9 0%, #F4FAF0 100%);
+         color: var(--text);
+      }
+
+      .wrap {
+         height: 100vh;
+         padding: 18px;
+         display: grid;
+         grid-template-columns: 310px 1fr 310px;
+         gap: 18px;
+      }
+
+      .panel {
+         background: rgba(255, 255, 255, .78);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(20px);
+         border-radius: 30px;
+         box-shadow: var(--shadow);
+         padding: 20px;
+      }
+
+      .logo {
+         font-size: 38px;
+         font-weight: 900;
+         letter-spacing: -.04em;
+         color: var(--green-dark);
+         line-height: 1;
+      }
+
+      .sub {
+         margin-top: 6px;
+         font-size: 11px;
+         letter-spacing: .18em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 700;
+      }
+
+      .cap {
+         margin-top: 22px;
+         font-size: 11px;
+         letter-spacing: .16em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 800;
+      }
+
+      .song {
+         margin-top: 8px;
+         font-size: 28px;
+         font-weight: 900;
+         color: var(--green-dark);
+         letter-spacing: -.03em;
+      }
+
+      .txt {
+         margin-top: 8px;
+         font-size: 14px;
+         line-height: 1.58;
+         color: var(--muted);
+      }
+
+      .status {
+         margin-top: 18px;
+         padding: 14px 15px;
+         border-radius: 22px;
+         background: #fff;
+         border: 1px solid var(--line);
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 12px;
+         font-size: 14px;
+         font-weight: 700;
+      }
+
+      .dot {
+         width: 11px;
+         height: 11px;
+         border-radius: 999px;
+         background: #C2C8C0;
+         display: inline-block;
+         margin-right: 8px;
+         vertical-align: -1px;
+      }
+
+      .dot.ok {
+         background: #61C681;
+         box-shadow: 0 0 0 6px rgba(97, 198, 129, .14)
+      }
+
+      .dot.err {
+         background: var(--danger);
+         box-shadow: 0 0 0 6px rgba(217, 108, 108, .14)
+      }
+
+      .progress-wrap {
+         margin-top: 18px
+      }
+
+      .bar {
+         height: 11px;
+         border-radius: 999px;
+         background: #EEF4EA;
+         overflow: hidden
+      }
+
+      .fill {
+         height: 100%;
+         width: 0%;
+         border-radius: 999px;
+         background: linear-gradient(90deg, var(--green), var(--green2));
+         transition: .12s linear;
+      }
+
+      .finger-map {
+         margin-top: 14px;
+         display: grid;
+         gap: 10px;
+      }
+
+      .finger-row {
+         padding: 12px 14px;
+         border-radius: 18px;
+         background: #fff;
+         border: 1px solid var(--line);
+         transition: .18s ease;
+      }
+
+      .finger-row.active {
+         border-color: #A9D96B;
+         box-shadow: 0 12px 30px rgba(169, 217, 107, .18);
+         transform: translateY(-2px);
+      }
+
+      .fr-top {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         font-size: 14px;
+         margin-bottom: 8px;
+      }
+
+      .fr-name {
+         font-weight: 800
+      }
+
+      .fr-val {
+         color: var(--muted);
+         font-weight: 700
+      }
+
+      .center {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         min-width: 0;
+      }
+
+      .stage {
+         width: 100%;
+         max-width: 920px;
+         height: calc(100vh - 36px);
+         border-radius: 34px;
+         padding: 16px;
+         background: rgba(255, 255, 255, .58);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(20px);
+         box-shadow: var(--shadow);
+      }
+
+      .hero {
+         position: relative;
+         width: 100%;
+         height: 100%;
+         border-radius: 26px;
+         overflow: hidden;
+         background:
+            radial-gradient(circle at 50% 18%, rgba(255, 255, 255, .9), rgba(255, 255, 255, .4) 24%, transparent 45%),
+            linear-gradient(180deg, #F7FBF4 0%, #EAF4E1 100%);
+      }
+
+      /* Stylized dombra background */
+      .dombra-scene {
+         position: absolute;
+         inset: 0;
+         overflow: hidden
+      }
+
+      .dombra-body {
+         position: absolute;
+         left: 50%;
+         top: 51%;
+         width: 405px;
+         height: 560px;
+         transform: translate(-50%, -43%) rotate(-8deg);
+         border-radius: 45% 45% 52% 52%;
+         background:
+            radial-gradient(circle at 35% 24%, rgba(255, 255, 255, .72), transparent 18%),
+            linear-gradient(145deg, #E7B96A 0%, #B87532 45%, #6D3D1D 100%);
+         box-shadow:
+            inset 0 0 45px rgba(255, 255, 255, .18),
+            inset -20px -25px 60px rgba(50, 20, 5, .32),
+            0 32px 80px rgba(70, 45, 20, .20);
+         opacity: .95;
+      }
+
+      .dombra-hole {
+         position: absolute;
+         left: 50%;
+         top: 44%;
+         width: 122px;
+         height: 122px;
+         transform: translate(-50%, -50%);
+         border-radius: 50%;
+         background:
+            radial-gradient(circle, #1C120B 0%, #2C170D 55%, #6F3F1C 58%, #E4B469 66%, #5B3218 100%);
+         box-shadow: inset 0 0 20px rgba(0, 0, 0, .6);
+      }
+
+      .dombra-neck {
+         position: absolute;
+         left: 50%;
+         top: -18%;
+         width: 82px;
+         height: 610px;
+         transform: translateX(-50%) rotate(-8deg);
+         border-radius: 44px;
+         background: linear-gradient(90deg, #5D3419, #B16B32, #5A3118);
+         box-shadow: inset -8px 0 20px rgba(0, 0, 0, .25), 0 20px 50px rgba(70, 45, 20, .16);
+      }
+
+      .dombra-strings {
+         position: absolute;
+         left: 50%;
+         top: -7%;
+         width: 90px;
+         height: 760px;
+         transform: translateX(-50%) rotate(-8deg);
+         pointer-events: none;
+      }
+
+      .real-string {
+         position: absolute;
+         top: 0;
+         bottom: 0;
+         width: 2px;
+         background: rgba(255, 255, 255, .76);
+         box-shadow: 0 0 14px rgba(255, 255, 255, .55);
+         border-radius: 999px;
+      }
+
+      .real-string.a {
+         left: 34px
+      }
+
+      .real-string.b {
+         left: 55px
+      }
+
+      .real-string.vibrate {
+         animation: vibrate .18s ease
+      }
+
+      @keyframes vibrate {
+         0% {
+            transform: translateX(0)
+         }
+
+         25% {
+            transform: translateX(-3px)
+         }
+
+         50% {
+            transform: translateX(3px)
+         }
+
+         75% {
+            transform: translateX(-2px)
+         }
+
+         100% {
+            transform: translateX(0)
+         }
+      }
+
+      .hero::after {
+         content: "";
+         position: absolute;
+         inset: 0;
+         background:
+            linear-gradient(to top, rgba(18, 49, 38, .18), transparent 52%),
+            radial-gradient(circle at 50% 14%, rgba(255, 255, 255, .34), transparent 18%);
+         pointer-events: none;
+      }
+
+      .top-chip {
+         position: absolute;
+         left: 50%;
+         top: 18px;
+         transform: translateX(-50%);
+         z-index: 5;
+         padding: 12px 18px;
+         border-radius: 999px;
+         background: rgba(255, 255, 255, .80);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(14px);
+         box-shadow: 0 14px 35px rgba(18, 49, 38, .10);
+         color: var(--green-dark);
+         font-size: 14px;
+         font-weight: 900;
+         letter-spacing: .05em;
+         text-transform: uppercase;
+         display: flex;
+         align-items: center;
+         gap: 10px;
+      }
+
+      .pulse-dot {
+         width: 9px;
+         height: 9px;
+         border-radius: 50%;
+         background: var(--green2);
+         box-shadow: 0 0 0 7px rgba(169, 217, 107, .22);
+      }
+
+      /* First-version style lane */
+      .timing-lane {
+         position: absolute;
+         left: 10%;
+         right: 10%;
+         bottom: 74px;
+         height: 250px;
+         z-index: 4;
+      }
+
+      .string {
+         position: absolute;
+         left: 0;
+         right: 0;
+         height: 2px;
+         border-radius: 99px;
+         background: rgba(18, 49, 38, .28);
+         box-shadow: 0 0 16px rgba(255, 255, 255, .55);
+      }
+
+      .s1 {
+         top: 50px
+      }
+
+      .s2 {
+         top: 125px
+      }
+
+      .s3 {
+         top: 200px
+      }
+
+      .hit-zone {
+         position: absolute;
+         top: -14px;
+         bottom: -14px;
+         width: 72px;
+         border-radius: 24px;
+         background: rgba(217, 237, 184, .18);
+         border: 1px solid rgba(217, 237, 184, .72);
+         transform: translateX(-50%);
+         transition: left .3s ease;
+      }
+
+      .cursor {
+         position: absolute;
+         top: -8px;
+         bottom: -8px;
+         width: 4px;
+         border-radius: 999px;
+         background: rgba(255, 255, 255, .96);
+         box-shadow: 0 0 18px rgba(255, 255, 255, .85);
+         transform: translateX(-50%);
+         transition: background .08s, box-shadow .08s;
+      }
+
+      .note {
+         position: absolute;
+         width: 38px;
+         height: 38px;
+         border-radius: 999px;
+         transform: translate(-50%, -50%);
+         box-shadow:
+            0 0 0 7px rgba(255, 255, 255, .40),
+            0 12px 28px rgba(0, 0, 0, .16);
+         transition: box-shadow .12s ease, transform .12s ease, opacity .12s ease;
+      }
+
+      .note-label {
+         position: absolute;
+         left: 50%;
+         top: 44px;
+         transform: translateX(-50%);
+         color: #fff;
+         font-size: 11px;
+         font-weight: 900;
+         letter-spacing: .12em;
+         text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+         white-space: nowrap;
+      }
+
+      .note.active {
+         transform: translate(-50%, -50%) scale(1.32);
+         box-shadow:
+            0 0 0 12px rgba(255, 255, 255, .45),
+            0 0 34px rgba(255, 255, 255, .70),
+            0 16px 35px rgba(0, 0, 0, .18);
+      }
+
+      .note.dim {
+         opacity: .55;
+         transform: translate(-50%, -50%) scale(.92);
+      }
+
+      .note.success {
+         transform: translate(-50%, -50%) scale(1.58);
+         box-shadow:
+            0 0 0 18px rgba(217, 237, 184, .55),
+            0 0 48px rgba(217, 237, 184, .90),
+            0 16px 35px rgba(0, 0, 0, .18);
+      }
+
+      .note.miss {
+         transform: translate(-50%, -50%) scale(1.22);
+         box-shadow:
+            0 0 0 14px rgba(217, 108, 108, .32),
+            0 0 34px rgba(217, 108, 108, .60);
+      }
+
+      .n1 {
+         background: var(--green2)
+      }
+
+      .n2 {
+         background: var(--gold)
+      }
+
+      .n3 {
+         background: var(--blue)
+      }
+
+      .start {
+         position: absolute;
+         left: 50%;
+         bottom: 20px;
+         transform: translateX(-50%);
+         z-index: 8;
+         border: none;
+         border-radius: 999px;
+         padding: 15px 34px;
+         color: #fff;
+         background: linear-gradient(135deg, #123126, #1D6B4C);
+         font-size: 17px;
+         font-weight: 900;
+         cursor: pointer;
+         box-shadow: 0 18px 40px rgba(18, 49, 38, .23);
+         transition: .25s ease;
+      }
+
+      .start:hover {
+         transform: translateX(-50%) translateY(-3px)
+      }
+
+      .overlay-message {
+         position: absolute;
+         z-index: 10;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         padding: 22px 26px;
+         border-radius: 26px;
+         background: rgba(255, 255, 255, .84);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(18px);
+         box-shadow: 0 20px 50px rgba(18, 49, 38, .12);
+         text-align: center;
+         width: min(440px, 80%);
+      }
+
+      .overlay-message h2 {
+         font-size: 36px;
+         letter-spacing: -.04em;
+         color: var(--green-dark);
+      }
+
+      .overlay-message p {
+         margin-top: 8px;
+         color: var(--muted);
+         line-height: 1.55;
+      }
+
+      .hidden {
+         display: none
+      }
+
+      .metric-box {
+         padding: 17px 16px;
+         border-radius: 22px;
+         background: #fff;
+         border: 1px solid var(--line);
+         margin-bottom: 12px;
+         text-align: center;
+      }
+
+      .num {
+         font-size: 35px;
+         font-weight: 900;
+         color: var(--green-dark);
+         line-height: 1;
+      }
+
+      .lab {
+         margin-top: 7px;
+         font-size: 11px;
+         letter-spacing: .16em;
+         text-transform: uppercase;
+         font-weight: 800;
+         color: var(--muted);
+      }
+
+      .next {
+         margin-top: 18px;
+         padding: 18px;
+         border-radius: 24px;
+         background: #fff;
+         border: 1px solid var(--line);
+         text-align: center;
+      }
+
+      .finger {
+         margin-top: 8px;
+         font-size: 34px;
+         font-weight: 900;
+         color: var(--green-dark);
+      }
+
+      .finger-help {
+         margin-top: 4px;
+         font-size: 15px;
+         font-weight: 800;
+         color: var(--muted);
+      }
+
+      .tip {
+         margin-top: 10px;
+         color: var(--muted);
+         font-size: 14px;
+         line-height: 1.5;
+      }
+
+      .quality {
+         margin-top: 12px;
+         display: grid;
+         gap: 10px;
+      }
+
+      .qrow {
+         display: flex;
+         justify-content: space-between;
+         color: var(--muted);
+         font-size: 14px;
+         font-weight: 700;
+      }
+
+      .popup {
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         font-size: 58px;
+         font-weight: 900;
+         color: var(--green-dark);
+         text-shadow: 0 14px 38px rgba(18, 49, 38, .12);
+         animation: pop .72s forwards;
+         pointer-events: none;
+         z-index: 999;
+      }
+
+      .popup.miss {
+         color: var(--danger)
+      }
+
+      @keyframes pop {
+         0% {
+            opacity: 0;
+            transform: translate(-50%, -48%) scale(.72)
+         }
+
+         22% {
+            opacity: 1
+         }
+
+         100% {
+            opacity: 0;
+            transform: translate(-50%, -62%) scale(1.15)
+         }
+      }
+
+
+      .back-btn {
+         position: absolute;
+         left: 22px;
+         top: 22px;
+         z-index: 20;
+         text-decoration: none;
+         color: var(--green-dark);
+         background: rgba(255, 255, 255, .86);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(14px);
+         padding: 11px 16px;
+         border-radius: 999px;
+         font-size: 14px;
+         font-weight: 900;
+         box-shadow: 0 12px 30px rgba(18, 49, 38, .10);
+         transition: .2s ease;
+      }
+
+      .back-btn:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 18px 38px rgba(18, 49, 38, .14);
+      }
+
+      @media(max-width:1050px) {
+         body {
+            overflow: auto
+         }
+
+         .wrap {
+            height: auto;
+            min-height: 100vh;
+            grid-template-columns: 1fr
+         }
+
+         .stage {
+            height: 72vh
+         }
+      }
+   </style>
+</head>
+
+<body>
+
+   <div class="wrap">
+
+      <aside class="panel">
+         <div class="logo">QOLDA</div>
+         <div class="sub">Dombra Therapy Mode</div>
+
+         <div class="cap">Current Pattern</div>
+         <div class="song">Saryarqa</div>
+         <div class="txt">
+            First-version visual style, but with corrected timing and <strong>dombra.wav</strong> longer soft plucks.
+         </div>
+
+         <div class="status">
+            <div><span id="dot" class="dot"></span><span id="statusText">Connecting...</span></div>
+            <div id="modeText">Glove</div>
+         </div>
+
+         <div class="progress-wrap">
+            <div class="cap">Sequence Progress</div>
+            <div class="bar">
+               <div class="fill" id="progress"></div>
+            </div>
+         </div>
+
+         <div class="cap">Live Finger Input</div>
+         <div class="finger-map">
+            <div class="finger-row" id="thumbRow">
+               <div class="fr-top"><span class="fr-name">Thumb / Big finger</span><span id="thumbVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="thumbFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="indexRow">
+               <div class="fr-top"><span class="fr-name">Index / Pointing finger</span><span id="indexVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="indexFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="pinkyRow">
+               <div class="fr-top"><span class="fr-name">Pinky / Little finger</span><span id="pinkyVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="pinkyFill"></div>
+               </div>
+            </div>
+         </div>
+
+         <div class="cap">Fallback Test</div>
+         <div class="txt">Keyboard: 1 = Thumb, 2 = Index, 3 = Pinky, Space = Restart. One squeeze = one strongest finger
+            only.</div>
+      </aside>
+
+      <main class="center">
+         <div class="stage">
+            <div class="hero">
+               <a href="index.html" class="back-btn">← Back to Hub</a>
+
+               <div class="dombra-scene">
+                  <div class="dombra-neck"></div>
+                  <div class="dombra-body">
+                     <div class="dombra-hole"></div>
+                  </div>
+                  <div class="dombra-strings">
+                     <div class="real-string a" id="realStringA"></div>
+                     <div class="real-string b" id="realStringB"></div>
+                  </div>
+               </div>
+
+               <div class="top-chip">
+                  <span class="pulse-dot"></span>
+                  <span id="prompt">NEXT FINGER • THUMB</span>
+               </div>
+
+               <div class="overlay-message" id="intro">
+                  <h2>Dombra Therapy</h2>
+                  <p>Three fixed notes like the first version. Timing affects score, but for demo the correct finger
+                     always works.</p>
+               </div>
+
+               <div class="timing-lane" id="lane">
+                  <div class="hit-zone" id="hitZone"></div>
+                  <div class="cursor" id="cursor"></div>
+
+                  <div class="string s1"></div>
+                  <div class="string s2"></div>
+                  <div class="string s3"></div>
+
+                  <div class="note n1" id="n1"><span class="note-label">THUMB</span></div>
+                  <div class="note n2" id="n2"><span class="note-label">INDEX</span></div>
+                  <div class="note n3" id="n3"><span class="note-label">PINKY</span></div>
+               </div>
+
+               <button class="start" id="startBtn">Start Session</button>
+            </div>
+         </div>
+      </main>
+
+      <aside class="panel">
+         <div class="metric-box">
+            <div class="num" id="score">0</div>
+            <div class="lab">Score</div>
+         </div>
+
+         <div class="metric-box">
+            <div class="num" id="combo">0</div>
+            <div class="lab">Combo</div>
+         </div>
+
+         <div class="metric-box">
+            <div class="num" id="accuracy">100%</div>
+            <div class="lab">Accuracy</div>
+         </div>
+
+         <div class="metric-box">
+            <div class="num" id="best">0</div>
+            <div class="lab">Best</div>
+         </div>
+
+         <div class="next">
+            <div class="cap">Next Finger</div>
+            <div class="finger" id="fingerText">THUMB</div>
+            <div class="finger-help" id="fingerHelp">Use your big finger</div>
+            <div class="tip" id="tip">Press the shown finger. The white line gives rhythm guidance.</div>
+
+            <div class="quality">
+               <div class="qrow"><span>Visual</span><span>Static Notes</span></div>
+               <div class="qrow"><span>Sound</span><span id="soundStatus">Extra long pluck</span></div>
+            </div>
+         </div>
+      </aside>
+
+   </div>
+
+   <script>
+      const DROMBRA_FILE = "dombra.wav"; // change to "dombra.mp3" if your file is mp3
+
+      const soundStatusEl = document.getElementById("soundStatus");
+      let soundAvailable = false;
+
+      const testAudio = new Audio(DROMBRA_FILE);
+      testAudio.addEventListener("canplaythrough", () => {
+         soundAvailable = true;
+         if (soundStatusEl) soundStatusEl.innerText = "Ready";
+      });
+      testAudio.addEventListener("error", () => {
+         soundAvailable = false;
+         if (soundStatusEl) soundStatusEl.innerText = "Missing file";
+      });
+      testAudio.load();
+
+
+      function playDombra(finger) {
+         const rateMap = {
+            thumb: 0.82,
+            index: 1.0,
+            pinky: 1.18
+         };
+
+         const startMap = {
+            thumb: 0.00,
+            index: 0.18,
+            pinky: 0.36
+         };
+
+         const durationMap = {
+            thumb: 1700,
+            index: 1550,
+            pinky: 1450
+         };
+
+         const audio = new Audio(DROMBRA_FILE);
+         audio.preload = "auto";
+         audio.playbackRate = rateMap[finger] || 1;
+         audio.volume = 0.0;
+
+         const targetVolume = 1.0;
+         const fadeInMs = 35;
+         const fadeOutMs = 520;
+         const duration = durationMap[finger] || 850;
+
+         let fadeInTimer = null;
+         let fadeOutTimer = null;
+
+         function fadeTo(target, ms, onDone) {
+            const startVolume = audio.volume;
+            const startTime = performance.now();
+
+            const timer = setInterval(() => {
+               const p = Math.min(1, (performance.now() - startTime) / ms);
+               audio.volume = startVolume + (target - startVolume) * p;
+
+               if (p >= 1) {
+                  clearInterval(timer);
+                  if (onDone) onDone();
+               }
+            }, 16);
+
+            return timer;
+         }
+
+         const playSlice = () => {
+            try {
+               if (audio.duration && isFinite(audio.duration)) {
+                  audio.currentTime = Math.min(startMap[finger] || 0, Math.max(0, audio.duration - 0.5));
+               }
+            } catch (e) { }
+
+            audio.play().then(() => {
+               if (soundStatusEl) soundStatusEl.innerText = "Playing";
+
+               fadeInTimer = fadeTo(targetVolume, fadeInMs);
+
+               setTimeout(() => {
+                  if (fadeInTimer) clearInterval(fadeInTimer);
+
+                  fadeOutTimer = fadeTo(0.0, fadeOutMs, () => {
+                     audio.pause();
+                     try { audio.currentTime = 0; } catch (e) { }
+                     if (soundStatusEl) soundStatusEl.innerText = "Ready";
+                  });
+               }, Math.max(80, duration - fadeOutMs));
+
+            }).catch(() => {
+               if (soundStatusEl) soundStatusEl.innerText = "Click Start first";
+            });
+         };
+
+         if (audio.readyState >= 1) {
+            playSlice();
+         } else {
+            audio.addEventListener("loadedmetadata", playSlice, { once: true });
+            audio.addEventListener("error", () => {
+               if (soundStatusEl) soundStatusEl.innerText = "Missing audio file";
+            }, { once: true });
+            audio.load();
+         }
+
+         vibrateStrings(finger);
+      }
+
+      function vibrateStrings(finger) {
+         const a = document.getElementById("realStringA");
+         const b = document.getElementById("realStringB");
+
+         if (finger === "thumb") {
+            a.classList.add("vibrate");
+         } else if (finger === "index") {
+            b.classList.add("vibrate");
+         } else {
+            a.classList.add("vibrate");
+            b.classList.add("vibrate");
+         }
+
+         setTimeout(() => {
+            a.classList.remove("vibrate");
+            b.classList.remove("vibrate");
+         }, 190);
+      }
+
+      const dot = document.getElementById("dot");
+      const statusText = document.getElementById("statusText");
+      const modeText = document.getElementById("modeText");
+
+      const progress = document.getElementById("progress");
+      const promptEl = document.getElementById("prompt");
+      const fingerText = document.getElementById("fingerText");
+      const fingerHelp = document.getElementById("fingerHelp");
+      const tip = document.getElementById("tip");
+
+      const scoreEl = document.getElementById("score");
+      const comboEl = document.getElementById("combo");
+      const accuracyEl = document.getElementById("accuracy");
+      const bestEl = document.getElementById("best");
+
+      const thumbVal = document.getElementById("thumbVal");
+      const indexVal = document.getElementById("indexVal");
+      const pinkyVal = document.getElementById("pinkyVal");
+
+      const thumbFill = document.getElementById("thumbFill");
+      const indexFill = document.getElementById("indexFill");
+      const pinkyFill = document.getElementById("pinkyFill");
+
+      const thumbRow = document.getElementById("thumbRow");
+      const indexRow = document.getElementById("indexRow");
+      const pinkyRow = document.getElementById("pinkyRow");
+
+      const lane = document.getElementById("lane");
+      const cursor = document.getElementById("cursor");
+      const hitZone = document.getElementById("hitZone");
+      const intro = document.getElementById("intro");
+      const startBtn = document.getElementById("startBtn");
+
+      const notes = {
+         thumb: document.getElementById("n1"),
+         index: document.getElementById("n2"),
+         pinky: document.getElementById("n3")
+      };
+
+      const help = {
+         thumb: "Use your big finger",
+         index: "Use your pointing finger",
+         pinky: "Use your little finger / pinky"
+      };
+
+      const labelMap = {
+         thumb: "THUMB",
+         index: "INDEX",
+         pinky: "PINKY"
+      };
+
+      /*
+        SITE INPUT FIX:
+        Your current glove core is OK, but the website sees thumb/index reversed.
+        So we remap incoming glove events here:
+        - physical thumb signal arrives as "index" -> game thumb
+        - physical index signal arrives as "thumb" -> game index
+        If later it becomes correct, change this to:
+        const SOURCE_TO_GAME = { thumb:"thumb", index:"index", pinky:"pinky" };
+      */
+      const SOURCE_TO_GAME = {
+         thumb: "index",
+         index: "thumb",
+         pinky: "pinky"
+      };
+
+      const GAME_TO_SOURCE = {
+         thumb: "index",
+         index: "thumb",
+         pinky: "pinky"
+      };
+
+      const notePos = {
+         thumb: { x: 24, y: 50 },
+         index: { x: 52, y: 125 },
+         pinky: { x: 80, y: 200 }
+      };
+
+      const sequence = ["thumb", "pinky", "index", "thumb", "pinky", "index", "thumb", "index", "pinky", "index"];
+
+      let live = {
+         thumb: 0, index: 0, pinky: 0, middle: 0,
+         thumb_bent: 0, index_bent: 0, pinky_bent: 0, middle_bent: 0,
+         primary: "none"
+      };
+
+      let step = 0;
+      let score = 0;
+      let combo = 0;
+      let hits = 0;
+      let attempts = 0;
+      let best = Number(localStorage.getItem("qolda_dombra_static_best_v1") || 0);
+      let playing = false;
+
+      let beatStart = 0;
+      const beatDuration = 3400;   // slower
+      const hitPoint = 0.82;       // legacy; actual timing uses active note x-position
+      const hitWindow = 0.105;      // correct timing, not too early
+      let lastBentState = { thumb: 0, index: 0, pinky: 0 };
+
+      bestEl.innerText = best;
+
+      function popup(text, type = "ok") {
+         const d = document.createElement("div");
+         d.className = "popup " + (type === "miss" ? "miss" : "");
+         d.innerText = text;
+         document.body.appendChild(d);
+         setTimeout(() => d.remove(), 720);
+      }
+
+      function getLaneWidth() {
+         return lane.getBoundingClientRect().width;
+      }
+
+      function getPinkyValue() {
+         if (live.pinky !== undefined && live.pinky !== null) return Number(live.pinky) || 0;
+         return Number(live.middle) || 0;
+      }
+
+      function activeRow(finger) {
+         thumbRow.classList.toggle("active", finger === "thumb");
+         indexRow.classList.toggle("active", finger === "index");
+         pinkyRow.classList.toggle("active", finger === "pinky");
+      }
+
+      function setNotePositions() {
+         const current = sequence[step % sequence.length];
+
+         for (const [finger, el] of Object.entries(notes)) {
+            const pos = notePos[finger];
+            el.style.left = pos.x + "%";
+            el.style.top = pos.y + "px";
+            el.classList.remove("active", "dim");
+
+            if (finger === current) el.classList.add("active");
+            else el.classList.add("dim");
+         }
+
+         const currentPos = notePos[current];
+         hitZone.style.left = currentPos.x + "%";
+         activeRow(current);
+      }
+
+      function updatePrompt() {
+         const current = sequence[step % sequence.length];
+         promptEl.innerText = "NEXT FINGER • " + labelMap[current];
+         fingerText.innerText = labelMap[current];
+         fingerHelp.innerText = help[current];
+         progress.style.width = ((step % sequence.length) / sequence.length * 100) + "%";
+         setNotePositions();
+      }
+
+      function getLiveValue(source) {
+         if (source === "pinky") return getPinkyValue();
+         return Number(live[source]) || 0;
+      }
+
+      function getGameValue(gameFinger) {
+         const source = GAME_TO_SOURCE[gameFinger] || gameFinger;
+         return getLiveValue(source);
+      }
+
+      function getLiveBent(source) {
+         if (source === "pinky") {
+            return (live.pinky_bent || live.middle_bent) ? 1 : 0;
+         }
+         return live[source + "_bent"] ? 1 : 0;
+      }
+
+      function getLiveJB(source) {
+         if (source === "pinky") {
+            return (live.pinky_jb || live.middle_jb) ? 1 : 0;
+         }
+         return live[source + "_jb"] ? 1 : 0;
+      }
+
+      function updateUI() {
+         scoreEl.innerText = score;
+         comboEl.innerText = combo;
+         bestEl.innerText = best;
+         accuracyEl.innerText = attempts === 0 ? "100%" : Math.round((hits / attempts) * 100) + "%";
+
+         thumbVal.innerText = getGameValue('thumb').toFixed(2);
+         indexVal.innerText = getGameValue('index').toFixed(2);
+         pinkyVal.innerText = getGameValue('pinky').toFixed(2);
+
+         thumbFill.style.width = (getGameValue('thumb') * 100) + "%";
+         indexFill.style.width = (getGameValue('index') * 100) + "%";
+         pinkyFill.style.width = (getGameValue('pinky') * 100) + "%";
+
+         updatePrompt();
+      }
+
+      function currentTiming() {
+         if (!playing) return 0;
+         return ((performance.now() - beatStart) % beatDuration) / beatDuration;
+      }
+
+      function judge(finger) {
+         if (!playing) return;
+
+         const expected = sequence[step % sequence.length];
+
+         // DEMO-SAFE TIMING:
+         // The glove signal is slower than a keyboard, so the game should not require millisecond-perfect timing.
+         // We still show the moving white line, but a correct finger press is accepted during the active cue.
+         const t = currentTiming();
+         const targetT = notePos[expected].x / 100;
+         const err = Math.abs(t - targetT);
+
+         attempts++;
+
+         if (finger === expected) {
+            hits++;
+
+            // Score still rewards better timing, but does not block the user.
+            let quality = "GOOD";
+            let gain = 85;
+
+            if (err <= 0.08) {
+               quality = "PERFECT";
+               gain = 125;
+            } else if (err <= 0.18) {
+               quality = "GREAT";
+               gain = 105;
+            }
+
+            score += gain + combo * 6;
+            combo++;
+
+            playDombra(finger);
+
+            const el = notes[finger];
+            el.classList.add("success");
+            setTimeout(() => el.classList.remove("success"), 180);
+
+            popup(quality);
+            tip.innerText = "Correct finger. Continue with the next one.";
+
+            step++;
+            if (step % sequence.length === 0) {
+               popup("SEQUENCE COMPLETE");
+            }
+
+            // Restart the visual pulse for the next note.
+            beatStart = performance.now();
+         } else {
+            combo = 0;
+
+            const current = sequence[step % sequence.length];
+            notes[current].classList.add("miss");
+            setTimeout(() => notes[current].classList.remove("miss"), 200);
+
+            popup("WRONG FINGER", "miss");
+            tip.innerText = "Wrong finger. Follow the Next Finger label on the right.";
+         }
+
+         if (score > best) {
+            best = score;
+            localStorage.setItem("qolda_dombra_static_best_v1", best);
+         }
+
+         updateUI();
+      }
+
+      function startSession() {
+         playing = true;
+         step = 0;
+         score = 0;
+         combo = 0;
+         hits = 0;
+         attempts = 0;
+         beatStart = performance.now();
+         intro.classList.add("hidden");
+         startBtn.innerText = "Restart Session";
+         tip.innerText = "Press the shown finger. The white line gives rhythm guidance.";
+         updateUI();
+      }
+
+      function restart() {
+         startSession();
+      }
+
+      function animate() {
+         if (playing) {
+            const t = currentTiming();
+            const laneW = getLaneWidth();
+            const x = t * laneW;
+            cursor.style.left = x + "px";
+
+            const current = sequence[step % sequence.length];
+            const targetX = notePos[current].x / 100;
+            const exact = Math.abs(t - targetX) <= hitWindow;
+
+            if (exact) {
+               cursor.style.boxShadow = "0 0 28px rgba(217,237,184,.98)";
+               cursor.style.background = "#D9EDB8";
+            } else {
+               cursor.style.boxShadow = "0 0 18px rgba(255,255,255,.85)";
+               cursor.style.background = "rgba(255,255,255,.96)";
+            }
+         }
+         requestAnimationFrame(animate);
+      }
+
+      let lastJudgeMs = 0;
+      let pressLock = false;
+
+      function strongestGameFinger() {
+         /*
+           IMPORTANT FIX:
+           Sometimes one physical squeeze activates two channels.
+           We do NOT judge all bent fingers.
+           We choose only the strongest game finger at that moment.
+         */
+
+         const gameValues = {
+            thumb: getGameValue("thumb"),
+            index: getGameValue("index"),
+            pinky: getGameValue("pinky")
+         };
+
+         const gameBent = {
+            thumb: getLiveBent(GAME_TO_SOURCE.thumb),
+            index: getLiveBent(GAME_TO_SOURCE.index),
+            pinky: getLiveBent(GAME_TO_SOURCE.pinky)
+         };
+
+         let bestFinger = null;
+         let bestValue = 0;
+
+         for (const finger of ["thumb", "index", "pinky"]) {
+            if (gameBent[finger] && gameValues[finger] > bestValue) {
+               bestValue = gameValues[finger];
+               bestFinger = finger;
+            }
+         }
+
+         // Ignore weak noise.
+         if (bestValue < 0.18) return null;
+
+         return bestFinger;
+      }
+
+      function allReleased() {
+         return (
+            !getLiveBent(GAME_TO_SOURCE.thumb) &&
+            !getLiveBent(GAME_TO_SOURCE.index) &&
+            !getLiveBent(GAME_TO_SOURCE.pinky)
+         );
+      }
+
+      function handleBentEvents() {
+         const nowMs = performance.now();
+
+         // Unlock only after all fingers are released.
+         // This prevents one squeeze from triggering thumb + index together.
+         if (pressLock) {
+            if (allReleased()) {
+               pressLock = false;
+            }
+            return;
+         }
+
+         if (nowMs - lastJudgeMs < 300) return;
+
+         const finger = strongestGameFinger();
+
+         if (finger) {
+            judge(finger);
+            lastJudgeMs = nowMs;
+            pressLock = true;
+         }
+      }
+
+      function connectWS() {
+         const ws = new WebSocket("ws://127.0.0.1:8765");
+
+         ws.onopen = () => {
+            dot.className = "dot ok";
+            statusText.innerText = "Glove connected";
+            modeText.innerText = "Live";
+         };
+
+         ws.onclose = () => {
+            dot.className = "dot err";
+            statusText.innerText = "WebSocket disconnected";
+            modeText.innerText = "Retry";
+            setTimeout(connectWS, 1200);
+         };
+
+         ws.onerror = () => {
+            dot.className = "dot err";
+            statusText.innerText = "WebSocket error";
+            modeText.innerText = "Check bridge";
+         };
+
+         ws.onmessage = (event) => {
+            try {
+               const data = JSON.parse(event.data);
+               live = Object.assign(live, data);
+
+               if (live.pinky === undefined || live.pinky === null) live.pinky = live.middle || 0;
+               if (live.pinky_bent === undefined || live.pinky_bent === null) live.pinky_bent = live.middle_bent || 0;
+
+               if (!playing && (getLiveBent('thumb') || getLiveBent('index') || getLiveBent('pinky') || getLiveJB('thumb') || getLiveJB('index') || getLiveJB('pinky'))) {
+                  startSession();
+               }
+
+               handleBentEvents();
+               updateUI();
+            } catch (e) { }
+         };
+      }
+
+      startBtn.addEventListener("click", restart);
+
+      document.addEventListener("keydown", (e) => {
+         if (e.key === "1") judge("thumb");
+         if (e.key === "2") judge("index");
+         if (e.key === "3") judge("pinky");
+         if (e.code === "Space") restart();
+      });
+
+      connectWS();
+      updateUI();
+      animate();
+   </script>
+
+</body>
+
+</html>

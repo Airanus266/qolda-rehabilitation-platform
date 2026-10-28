@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+   <title>QOLDA NeuroKeys — Signature Green Edition</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
+
+   <style>
+      :root {
+         --bg: #FAFCF9;
+         --text: #141B14;
+         --muted: #5A6A5A;
+         --green: #D9EDB8;
+         --green2: #A9D96B;
+         --green3: #79B44C;
+         --green-dark: #123126;
+         --card: #FFFFFF;
+         --line: #E7EFE2;
+         --danger: #D96C6C;
+         --gold: #D5A847;
+         --blue: #6E9BFF;
+         --purple: #B18BE8;
+         --shadow: 0 24px 70px rgba(18, 49, 38, .09);
+      }
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         font-family: 'Outfit', sans-serif
+      }
+
+      body {
+         min-height: 100vh;
+         overflow: hidden;
+         color: var(--text);
+         background:
+            radial-gradient(circle at 10% 10%, rgba(217, 237, 184, .72), transparent 24%),
+            radial-gradient(circle at 90% 8%, rgba(223, 240, 208, .72), transparent 22%),
+            linear-gradient(180deg, #FBFDF9 0%, #F4FAF0 100%);
+      }
+
+      .wrap {
+         height: 100vh;
+         padding: 18px;
+         display: grid;
+         grid-template-columns: 315px 1fr 315px;
+         gap: 18px;
+      }
+
+      .panel {
+         background: rgba(255, 255, 255, .82);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(20px);
+         border-radius: 30px;
+         box-shadow: var(--shadow);
+         padding: 20px;
+         z-index: 5;
+      }
+
+      .logo {
+         font-size: 38px;
+         font-weight: 900;
+         letter-spacing: -.04em;
+         color: var(--green-dark);
+         line-height: 1;
+      }
+
+      .sub {
+         margin-top: 6px;
+         font-size: 11px;
+         letter-spacing: .18em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 700;
+      }
+
+      .cap {
+         margin-top: 22px;
+         font-size: 11px;
+         letter-spacing: .16em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 800;
+      }
+
+      .song {
+         margin-top: 8px;
+         font-size: 27px;
+         font-weight: 900;
+         color: var(--green-dark);
+         letter-spacing: -.03em;
+      }
+
+      .txt {
+         margin-top: 8px;
+         font-size: 14px;
+         line-height: 1.58;
+         color: var(--muted);
+      }
+
+      .status {
+         margin-top: 18px;
+         padding: 14px 15px;
+         border-radius: 22px;
+         background: #fff;
+         border: 1px solid var(--line);
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 12px;
+         font-size: 14px;
+         font-weight: 700;
+      }
+
+      .dot {
+         width: 11px;
+         height: 11px;
+         border-radius: 999px;
+         background: #C2C8C0;
+         display: inline-block;
+         margin-right: 8px;
+         vertical-align: -1px;
+      }
+
+      .dot.ok {
+         background: #61C681;
+         box-shadow: 0 0 0 6px rgba(97, 198, 129, .14)
+      }
+
+      .dot.err {
+         background: var(--danger);
+         box-shadow: 0 0 0 6px rgba(217, 108, 108, .14)
+      }
+
+      .bar {
+         height: 11px;
+         border-radius: 999px;
+         background: #EEF4EA;
+         overflow: hidden
+      }
+
+      .fill {
+         height: 100%;
+         width: 0%;
+         border-radius: 999px;
+         background: linear-gradient(90deg, var(--green), var(--green2));
+         transition: .12s linear;
+      }
+
+      .level-buttons {
+         display: grid;
+         gap: 10px;
+         margin-top: 12px
+      }
+
+      .level-btn {
+         border: none;
+         border-radius: 18px;
+         padding: 13px 14px;
+         background: #fff;
+         border: 1px solid var(--line);
+         color: var(--green-dark);
+         font-weight: 900;
+         cursor: pointer;
+         text-align: left;
+         transition: .2s ease;
+      }
+
+      .level-btn:hover {
+         transform: translateY(-1px)
+      }
+
+      .level-btn.active {
+         background: var(--green);
+         border-color: #B8D889;
+         box-shadow: 0 12px 28px rgba(169, 217, 107, .20);
+      }
+
+      .finger-map {
+         margin-top: 14px;
+         display: grid;
+         gap: 10px
+      }
+
+      .finger-row {
+         padding: 12px 14px;
+         border-radius: 18px;
+         background: #fff;
+         border: 1px solid var(--line);
+         transition: .18s ease;
+      }
+
+      .finger-row.active {
+         border-color: #A9D96B;
+         box-shadow: 0 12px 30px rgba(169, 217, 107, .18);
+         transform: translateY(-2px);
+      }
+
+      .fr-top {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         font-size: 14px;
+         margin-bottom: 8px;
+      }
+
+      .fr-name {
+         font-weight: 800
+      }
+
+      .fr-val {
+         color: var(--muted);
+         font-weight: 700
+      }
+
+      .center {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         min-width: 0;
+      }
+
+      .stage {
+         width: 100%;
+         max-width: 990px;
+         height: calc(100vh - 36px);
+         border-radius: 34px;
+         padding: 16px;
+         background: rgba(255, 255, 255, .58);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(20px);
+         box-shadow: var(--shadow);
+      }
+
+      .hero {
+         position: relative;
+         width: 100%;
+         height: 100%;
+         border-radius: 26px;
+         overflow: hidden;
+         background:
+            radial-gradient(circle at 50% 18%, rgba(255, 255, 255, .90), rgba(255, 255, 255, .38) 24%, transparent 46%),
+            linear-gradient(180deg, #F8FCF5 0%, #EAF4E1 100%);
+      }
+
+      .top-chip {
+         position: absolute;
+         left: 50%;
+         top: 18px;
+         transform: translateX(-50%);
+         z-index: 8;
+         padding: 12px 18px;
+         border-radius: 999px;
+         background: rgba(255, 255, 255, .82);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(14px);
+         box-shadow: 0 14px 35px rgba(18, 49, 38, .10);
+         color: var(--green-dark);
+         font-size: 14px;
+         font-weight: 900;
+         letter-spacing: .05em;
+         text-transform: uppercase;
+         display: flex;
+         align-items: center;
+         gap: 10px;
+      }
+
+      .pulse-dot {
+         width: 9px;
+         height: 9px;
+         border-radius: 50%;
+         background: var(--green2);
+         box-shadow: 0 0 0 7px rgba(169, 217, 107, .22);
+      }
+
+      .game-wrap {
+         position: absolute;
+         left: 50%;
+         top: 54%;
+         transform: translate(-50%, -50%);
+         width: min(805px, 86%);
+         height: min(600px, 70%);
+         border-radius: 32px;
+         background:
+            linear-gradient(180deg, rgba(255, 255, 255, .84), rgba(255, 255, 255, .50)),
+            radial-gradient(circle at 50% 50%, rgba(217, 237, 184, .25), transparent 60%);
+         border: 1px solid rgba(255, 255, 255, .98);
+         box-shadow:
+            inset 0 0 45px rgba(255, 255, 255, .28),
+            0 28px 80px rgba(18, 49, 38, .12);
+         overflow: hidden;
+      }
+
+      canvas {
+         position: absolute;
+         inset: 0;
+         width: 100%;
+         height: 100%;
+         z-index: 1
+      }
+
+      .lanes {
+         position: absolute;
+         inset: 22px 28px 24px;
+         z-index: 3;
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         gap: 14px;
+      }
+
+      .lane {
+         position: relative;
+         overflow: hidden;
+         border-radius: 26px;
+         background:
+            linear-gradient(180deg, rgba(255, 255, 255, .78), rgba(255, 255, 255, .38)),
+            radial-gradient(circle at 50% 100%, rgba(217, 237, 184, .42), transparent 48%);
+         border: 1px solid rgba(255, 255, 255, .96);
+         box-shadow: inset 0 0 24px rgba(255, 255, 255, .28);
+      }
+
+      .lane.active {
+         box-shadow:
+            inset 0 0 30px rgba(169, 217, 107, .45),
+            0 18px 40px rgba(169, 217, 107, .18);
+      }
+
+      .hit-zone {
+         position: absolute;
+         left: 14px;
+         right: 14px;
+         bottom: 24px;
+         height: 17px;
+         border-radius: 999px;
+         background: linear-gradient(90deg, var(--green), var(--green2));
+         box-shadow: 0 0 24px rgba(169, 217, 107, .52);
+      }
+
+      .lane-label {
+         position: absolute;
+         left: 0;
+         right: 0;
+         bottom: 52px;
+         text-align: center;
+         font-size: 11px;
+         font-weight: 900;
+         letter-spacing: .12em;
+         color: rgba(18, 49, 38, .46);
+         text-transform: uppercase;
+      }
+
+      .note {
+         position: absolute;
+         left: 13px;
+         right: 13px;
+         height: 30px;
+         border-radius: 999px;
+         background: linear-gradient(135deg, #fff, #D9EDB8);
+         box-shadow:
+            0 12px 26px rgba(18, 49, 38, .10),
+            0 0 22px rgba(169, 217, 107, .45);
+         border: 1px solid rgba(255, 255, 255, .92);
+      }
+
+      .note.hold {
+         height: 92px;
+         border-radius: 18px;
+         background: linear-gradient(180deg, #fff, #A9D96B);
+      }
+
+      .note.duo {
+         background: linear-gradient(135deg, #fff, #D5A847);
+         box-shadow:
+            0 12px 26px rgba(18, 49, 38, .10),
+            0 0 24px rgba(213, 168, 71, .45);
+      }
+
+      .start {
+         position: absolute;
+         left: 50%;
+         bottom: 22px;
+         transform: translateX(-50%);
+         z-index: 12;
+         border: none;
+         border-radius: 999px;
+         padding: 15px 34px;
+         color: #fff;
+         background: linear-gradient(135deg, #123126, #1D6B4C);
+         font-size: 17px;
+         font-weight: 900;
+         cursor: pointer;
+         box-shadow: 0 18px 40px rgba(18, 49, 38, .23);
+         transition: .25s ease;
+      }
+
+      .start:hover {
+         transform: translateX(-50%) translateY(-3px)
+      }
+
+      .start.hidden {
+         display: none
+      }
+
+      .overlay-message {
+         position: absolute;
+         z-index: 10;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         padding: 24px 28px;
+         border-radius: 28px;
+         background: rgba(255, 255, 255, .88);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(18px);
+         box-shadow: 0 20px 50px rgba(18, 49, 38, .12);
+         text-align: center;
+         width: min(520px, 84%);
+      }
+
+      .overlay-message h2 {
+         font-size: 38px;
+         letter-spacing: -.04em;
+         color: var(--green-dark);
+      }
+
+      .overlay-message p {
+         margin-top: 8px;
+         color: var(--muted);
+         line-height: 1.55;
+      }
+
+      .hidden {
+         display: none
+      }
+
+      .metric-box {
+         padding: 17px 16px;
+         border-radius: 22px;
+         background: #fff;
+         border: 1px solid var(--line);
+         margin-bottom: 12px;
+         text-align: center;
+      }
+
+      .num {
+         font-size: 35px;
+         font-weight: 900;
+         color: var(--green-dark);
+         line-height: 1;
+      }
+
+      .lab {
+         margin-top: 7px;
+         font-size: 11px;
+         letter-spacing: .16em;
+         text-transform: uppercase;
+         font-weight: 800;
+         color: var(--muted);
+      }
+
+      .next {
+         margin-top: 18px;
+         padding: 18px;
+         border-radius: 24px;
+         background: #fff;
+         border: 1px solid var(--line);
+         text-align: center;
+      }
+
+      .finger {
+         margin-top: 8px;
+         font-size: 32px;
+         font-weight: 900;
+         color: var(--green-dark);
+      }
+
+      .tip {
+         margin-top: 10px;
+         color: var(--muted);
+         font-size: 14px;
+         line-height: 1.5;
+      }
+
+      .quality {
+         margin-top: 12px;
+         display: grid;
+         gap: 10px
+      }
+
+      .qrow {
+         display: flex;
+         justify-content: space-between;
+         color: var(--muted);
+         font-size: 14px;
+         font-weight: 700;
+      }
+
+      .popup {
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         font-size: 58px;
+         font-weight: 900;
+         color: var(--green-dark);
+         text-shadow: 0 14px 38px rgba(18, 49, 38, .12);
+         animation: pop .72s forwards;
+         pointer-events: none;
+         z-index: 999;
+      }
+
+      .popup.miss {
+         color: var(--danger)
+      }
+
+      .report {
+         position: absolute;
+         inset: 0;
+         z-index: 40;
+         display: none;
+         align-items: center;
+         justify-content: center;
+         background: rgba(244, 250, 240, .62);
+         backdrop-filter: blur(12px);
+      }
+
+      .report.show {
+         display: flex
+      }
+
+      .report-card {
+         width: min(690px, 86%);
+         padding: 30px;
+         border-radius: 34px;
+         background: rgba(255, 255, 255, .88);
+         border: 1px solid white;
+         box-shadow: 0 34px 100px rgba(18, 49, 38, .18);
+      }
+
+      .report-card h2 {
+         font-size: 42px;
+         line-height: .98;
+         letter-spacing: -.055em;
+         color: var(--green-dark);
+      }
+
+      .report-grid {
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         gap: 12px;
+         margin-top: 22px;
+      }
+
+      .rbox {
+         padding: 16px;
+         border-radius: 22px;
+         background: #fff;
+         border: 1px solid var(--line);
+         text-align: center;
+      }
+
+      .rbox strong {
+         display: block;
+         font-size: 28px;
+         color: var(--green-dark);
+      }
+
+      .rbox span {
+         display: block;
+         margin-top: 6px;
+         font-size: 11px;
+         letter-spacing: .12em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 900;
+      }
+
+      .restart-report {
+         margin-top: 22px;
+         border: none;
+         border-radius: 999px;
+         padding: 13px 24px;
+         color: #fff;
+         background: linear-gradient(135deg, #123126, #1D6B4C);
+         font-size: 15px;
+         font-weight: 900;
+         cursor: pointer;
+      }
+
+      @keyframes pop {
+         0% {
+            opacity: 0;
+            transform: translate(-50%, -48%) scale(.72)
+         }
+
+         22% {
+            opacity: 1
+         }
+
+         100% {
+            opacity: 0;
+            transform: translate(-50%, -62%) scale(1.15)
+         }
+      }
+
+      @media(max-width:1050px) {
+         body {
+            overflow: auto
+         }
+
+         .wrap {
+            height: auto;
+            min-height: 100vh;
+            grid-template-columns: 1fr
+         }
+
+         .stage {
+            height: 78vh
+         }
+
+         .report-grid {
+            grid-template-columns: repeat(2, 1fr)
+         }
+      }
+
+      .note::after {
+         content: "";
+         position: absolute;
+         inset: 4px 8px auto 8px;
+         height: 6px;
+         border-radius: 999px;
+         background: rgba(255, 255, 255, .72);
+      }
+
+      .hold-fill {
+         position: absolute;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         height: 0%;
+         border-radius: inherit;
+         background: linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(18, 49, 38, .18));
+         pointer-events: none;
+      }
+
+      .lane::before {
+         content: "";
+         position: absolute;
+         inset: auto 16px 18px 16px;
+         height: 46px;
+         border-radius: 20px;
+         border: 1px dashed rgba(18, 49, 38, .12);
+         background: rgba(217, 237, 184, .12);
+      }
+
+      .back-btn {
+         position: absolute;
+         top: 18px;
+         left: 18px;
+         z-index: 30;
+         padding: 12px 18px;
+         border-radius: 999px;
+         text-decoration: none;
+         font-weight: 900;
+         font-size: 14px;
+         letter-spacing: .03em;
+         color: var(--green-dark);
+         background: rgba(255, 255, 255, .82);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(14px);
+         box-shadow: 0 14px 35px rgba(18, 49, 38, .10);
+         transition: .22s ease;
+      }
+
+      .back-btn:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 18px 40px rgba(18, 49, 38, .14);
+      }
+   </style>
+</head>
+
+<body>
+   <div class="wrap">
+      <aside class="panel">
+         <div class="logo">QOLDA</div>
+         <div class="sub">Medical Rhythm Therapy</div>
+
+         <div class="cap">Training Mode</div>
+         <div class="song">NeuroKeys Elite</div>
+         <div class="txt">
+            A calming rhythm therapy game for finger isolation, reaction speed, hold control and dual-finger
+            coordination.
+         </div>
+
+         <div class="status">
+            <div><span id="dot" class="dot"></span><span id="statusText">Connecting...</span></div>
+            <div id="modeText">Glove</div>
+         </div>
+
+         <div class="cap">Difficulty</div>
+         <div class="level-buttons">
+            <button class="level-btn active" data-mode="easy">Child Rehab</button>
+            <button class="level-btn" data-mode="therapy">Therapy</button>
+            <button class="level-btn" data-mode="challenge">Challenge</button>
+         </div>
+
+         <div class="cap">Session Progress</div>
+         <div class="bar">
+            <div class="fill" id="progressFill"></div>
+         </div>
+
+         <div class="cap">Live Finger Input</div>
+         <div class="finger-map">
+            <div class="finger-row" id="thumbRow">
+               <div class="fr-top"><span class="fr-name">Thumb / Lane 1</span><span id="thumbVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="thumbFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="indexRow">
+               <div class="fr-top"><span class="fr-name">Index / Lane 2</span><span id="indexVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="indexFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="ringRow">
+               <div class="fr-top"><span class="fr-name">Ring / Lane 3</span><span id="ringVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="ringFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="middleRow">
+               <div class="fr-top"><span class="fr-name">Pinky / Lane 4</span><span id="middleVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="middleFill"></div>
+               </div>
+            </div>
+         </div>
+
+         <div class="cap">Fallback Test</div>
+         <div class="txt">Keyboard: A S K L. Space start/restart. Glove: full-hand squeeze to start.</div>
+      </aside>
+
+      <main class="center">
+         <div class="stage">
+            <div class="hero">
+
+               <a class="back-btn" href="index.html">← Back to Hub</a>
+
+               <div class="top-chip"><span class="pulse-dot"></span><span id="prompt">WAIT FOR THE GLOWING ZONE</span>
+               </div>
+
+               <div class="game-wrap">
+                  <canvas id="canvas" width="805" height="600"></canvas>
+                  <div class="lanes" id="lanes">
+                     <div class="lane" data-lane="0">
+                        <div class="lane-label">THUMB</div>
+                        <div class="hit-zone"></div>
+                     </div>
+                     <div class="lane" data-lane="1">
+                        <div class="lane-label">INDEX</div>
+                        <div class="hit-zone"></div>
+                     </div>
+                     <div class="lane" data-lane="2">
+                        <div class="lane-label">RING</div>
+                        <div class="hit-zone"></div>
+                     </div>
+                     <div class="lane" data-lane="3">
+                        <div class="lane-label">PINKY</div>
+                        <div class="hit-zone"></div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="overlay-message" id="intro">
+                  <h2>NeuroKeys Elite</h2>
+                  <p>Press the matching finger when the note reaches the glowing zone. Start with Space, button, or one
+                     full-hand squeeze.</p>
+               </div>
+
+               <button class="start" id="startBtn">Start Session</button>
+
+               <div class="report" id="report">
+                  <div class="report-card">
+                     <h2>Therapy Impact Summary</h2>
+                     <div class="txt">Controlled finger activation, timing and coordination report.</div>
+                     <div class="report-grid">
+                        <div class="rbox"><strong id="rScore">0</strong><span>Score</span></div>
+                        <div class="rbox"><strong id="rAcc">100%</strong><span>Accuracy</span></div>
+                        <div class="rbox"><strong id="rWeak">—</strong><span>Weak Finger</span></div>
+                        <div class="rbox"><strong id="rReact">0ms</strong><span>Reaction</span></div>
+                     </div>
+                     <button class="restart-report" id="reportRestart">Restart Session</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+
+      <aside class="panel">
+         <div class="metric-box">
+            <div class="num" id="score">0</div>
+            <div class="lab">Score</div>
+         </div>
+         <div class="metric-box">
+            <div class="num" id="combo">0</div>
+            <div class="lab">Combo</div>
+         </div>
+         <div class="metric-box">
+            <div class="num" id="accuracy">100%</div>
+            <div class="lab">Accuracy</div>
+         </div>
+         <div class="metric-box">
+            <div class="num" id="reaction">0ms</div>
+            <div class="lab">Reaction</div>
+         </div>
+
+         <div class="next">
+            <div class="cap">Therapy Focus</div>
+            <div class="finger" id="focusTitle">Isolation</div>
+            <div class="tip" id="tip">Single notes train independent finger activation. Hold notes train sustained
+               control.</div>
+            <div class="quality">
+               <div class="qrow"><span>Tap Notes</span><span>Reaction</span></div>
+               <div class="qrow"><span>Hold Notes</span><span>Control</span></div>
+               <div class="qrow"><span>Dual Notes</span><span>Coordination</span></div>
+               <div class="qrow"><span>Report</span><span>Weak Finger</span></div>
+            </div>
+         </div>
+      </aside>
+   </div>
+
+   <script>
+      /*
+        QOLDA NeuroKeys Therapy 10x
+        Stable tap + hold + dual-note rhythm therapy engine.
+        Designed for CyberBrick WebSocket packet:
+        {thumb,index,ring,middle,global_grip, ...}
+      */
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const lanes = [...document.querySelectorAll(".lane")];
+      const gameWrap = document.querySelector(".game-wrap");
+
+      const dot = document.getElementById("dot");
+      const statusText = document.getElementById("statusText");
+      const modeText = document.getElementById("modeText");
+      const intro = document.getElementById("intro");
+      const startBtn = document.getElementById("startBtn");
+      const report = document.getElementById("report");
+      const reportRestart = document.getElementById("reportRestart");
+
+      const scoreEl = document.getElementById("score");
+      const comboEl = document.getElementById("combo");
+      const accuracyEl = document.getElementById("accuracy");
+      const reactionEl = document.getElementById("reaction");
+      const progressFill = document.getElementById("progressFill");
+      const focusTitle = document.getElementById("focusTitle");
+      const tip = document.getElementById("tip");
+      const promptEl = document.getElementById("prompt");
+
+      const thumbVal = document.getElementById("thumbVal");
+      const indexVal = document.getElementById("indexVal");
+      const ringVal = document.getElementById("ringVal");
+      const middleVal = document.getElementById("middleVal");
+      const thumbFill = document.getElementById("thumbFill");
+      const indexFill = document.getElementById("indexFill");
+      const ringFill = document.getElementById("ringFill");
+      const middleFill = document.getElementById("middleFill");
+
+      const thumbRow = document.getElementById("thumbRow");
+      const indexRow = document.getElementById("indexRow");
+      const ringRow = document.getElementById("ringRow");
+      const middleRow = document.getElementById("middleRow");
+
+      const rScore = document.getElementById("rScore");
+      const rAcc = document.getElementById("rAcc");
+      const rWeak = document.getElementById("rWeak");
+      const rReact = document.getElementById("rReact");
+
+      let live = {
+         thumb: 0, index: 0, ring: 0, pinky: 0, middle: 0, global_grip: 0,
+         thumb_bent: 0, index_bent: 0, ring_bent: 0, pinky_bent: 0, middle_bent: 0, global_bent: 0
+      };
+      let smoothLive = [0, 0, 0, 0];
+      let mode = "easy";
+      let notes = [];
+      let particles = [];
+      let playing = false;
+      let last = performance.now();
+      let spawnTimer = 0;
+      let sessionTime = 0;
+      let sessionLength = 52;
+      let score = 0;
+      let combo = 0;
+      let hits = 0;
+      let total = 0;
+      let misses = 0;
+      let holdSuccess = 0;
+      let holdFail = 0;
+      let reactions = [];
+      let fingerHits = [0, 0, 0, 0];
+      let fingerMiss = [0, 0, 0, 0];
+      let fingerHoldMs = [0, 0, 0, 0];
+      let inputDown = [false, false, false, false];
+      let keyboardDown = [false, false, false, false];
+      let lastInputFire = [0, 0, 0, 0];
+      let nextLane = Math.floor(Math.random() * 4);
+      let audioCtx = null;
+      let wsHandle = null;
+      let reconnectTimer = null;
+      let lastPacketAt = 0;
+      let gameRunId = 0;
+      let gripStartArmed = true;
+      let lastGripStartAt = 0;
+      let ringPinkyLock = null;
+      let previousTherapyValues = [0, 0, 0, 0];
+
+      const laneNames = ["THUMB", "INDEX", "RING", "PINKY"];
+      const laneColors = ["#A9D96B", "#D5A847", "#6E9BFF", "#B18BE8"];
+      const keyMap = { "KeyA": 0, "KeyS": 1, "KeyK": 2, "KeyL": 3 };
+
+      const modeSettings = {
+         easy: {
+            speed: 145, spawn: 1.45, holdChance: 0.16, duoChance: 0.00,
+            hitWindow: 94, pressThreshold: 0.20, releaseThreshold: 0.105,
+            minHoldMs: 520, label: "Child Rehab", session: 50
+         },
+         therapy: {
+            speed: 178, spawn: 1.18, holdChance: 0.24, duoChance: 0.08,
+            hitWindow: 84, pressThreshold: 0.22, releaseThreshold: 0.11,
+            minHoldMs: 640, label: "Therapy", session: 55
+         },
+         challenge: {
+            speed: 218, spawn: 0.94, holdChance: 0.27, duoChance: 0.13,
+            hitWindow: 72, pressThreshold: 0.24, releaseThreshold: 0.12,
+            minHoldMs: 720, label: "Challenge", session: 60
+         }
+      };
+
+      function ensureAudio() {
+         if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+         }
+         if (audioCtx.state === "suspended") audioCtx.resume();
+      }
+
+      function playTone(lane, kind = "good") {
+         ensureAudio();
+
+         const now = audioCtx.currentTime;
+         const base = [261.63, 329.63, 392.00, 523.25][lane] || 261.63;
+
+         // World-class UI sound style:
+         // short layered chime, soft filter, no harsh alarm for children.
+         const master = audioCtx.createGain();
+         const filter = audioCtx.createBiquadFilter();
+         const delay = audioCtx.createDelay();
+         const feedback = audioCtx.createGain();
+
+         filter.type = "lowpass";
+         filter.frequency.setValueAtTime(kind === "miss" ? 520 : 2800, now);
+         filter.Q.setValueAtTime(kind === "miss" ? 0.6 : 0.9, now);
+
+         delay.delayTime.setValueAtTime(0.055, now);
+         feedback.gain.setValueAtTime(kind === "miss" ? 0.02 : 0.065, now);
+
+         master.gain.setValueAtTime(0.0001, now);
+         master.gain.exponentialRampToValueAtTime(kind === "miss" ? 0.025 : 0.055, now + 0.012);
+         master.gain.exponentialRampToValueAtTime(0.0001, now + (kind === "hold" ? 0.52 : 0.28));
+
+         filter.connect(master);
+         filter.connect(delay);
+         delay.connect(feedback);
+         feedback.connect(delay);
+         delay.connect(master);
+         master.connect(audioCtx.destination);
+
+         const makeOsc = (type, freq, start, end, level = 1) => {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, now + start);
+            g.gain.setValueAtTime(0.0001, now + start);
+            g.gain.exponentialRampToValueAtTime(0.62 * level, now + start + 0.014);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + end);
+            osc.connect(g);
+            g.connect(filter);
+            osc.start(now + start);
+            osc.stop(now + end + 0.02);
+         };
+
+         if (kind === "miss") {
+            makeOsc("triangle", 145, 0.00, 0.16, 0.45);
+            makeOsc("sine", 96, 0.02, 0.22, 0.28);
+            return;
+         }
+
+         if (kind === "hold") {
+            makeOsc("sine", base, 0.00, 0.42, 0.42);
+            makeOsc("triangle", base * 1.5, 0.04, 0.38, 0.22);
+            makeOsc("sine", base * 2.0, 0.12, 0.48, 0.14);
+            return;
+         }
+
+         if (kind === "perfect") {
+            makeOsc("sine", base, 0.00, 0.20, 0.42);
+            makeOsc("triangle", base * 1.5, 0.035, 0.24, 0.26);
+            makeOsc("sine", base * 2.0, 0.075, 0.30, 0.18);
+            return;
+         }
+
+         makeOsc("sine", base, 0.00, 0.18, 0.38);
+         makeOsc("triangle", base * 1.25, 0.04, 0.22, 0.18);
+      }
+
+      function popup(text, type = "ok") {
+         const d = document.createElement("div");
+         d.className = "popup " + (type === "miss" ? "miss" : "");
+         d.innerText = text;
+         document.body.appendChild(d);
+         setTimeout(() => d.remove(), 720);
+      }
+
+      function addParticle(x, y, color, count = 16) {
+         for (let i = 0; i < count; i++) {
+            particles.push({
+               x, y,
+               vx: (Math.random() - 0.5) * 145,
+               vy: (Math.random() - 0.95) * 155,
+               life: 0.85 + Math.random() * 0.25,
+               color,
+               size: 2 + Math.random() * 4
+            });
+         }
+      }
+
+      function rawValues() {
+         const ring = live.ring !== undefined && live.ring !== null ? Number(live.ring) || 0 : Number(live.pinky) || 0;
+         const pinky = live.pinky !== undefined && live.pinky !== null ? Number(live.pinky) || 0 : Number(live.middle) || 0;
+         return [
+            Number(live.thumb) || 0,
+            Number(live.index) || 0,
+            ring,
+            pinky
+         ];
+      }
+
+      function getValues() {
+         const raw = rawValues();
+         for (let i = 0; i < 4; i++) {
+            smoothLive[i] = smoothLive[i] * 0.62 + raw[i] * 0.38;
+         }
+         return smoothLive;
+      }
+
+      function applyRingPinkyLock(values) {
+         // Critical fix: ring and pinky mechanically trigger each other.
+         // Keep exactly one of them active until both are released.
+         const pairPress = 0.205;
+         const pairRelease = 0.105;
+         const forceGap = 0.022;
+
+         const ring = values[2];
+         const pinky = values[3];
+
+         if (ring < pairRelease && pinky < pairRelease) {
+            ringPinkyLock = null;
+            values[2] = 0;
+            values[3] = 0;
+            previousTherapyValues = values.slice();
+            return values;
+         }
+
+         if (ringPinkyLock === 2 || ringPinkyLock === 3) {
+            const lockedValue = values[ringPinkyLock];
+            if (lockedValue >= pairRelease) {
+               values[ringPinkyLock === 2 ? 3 : 2] = 0;
+               previousTherapyValues = values.slice();
+               return values;
+            }
+            ringPinkyLock = null;
+         }
+
+         if (ring >= pairPress || pinky >= pairPress) {
+            let winner;
+            if (Math.abs(ring - pinky) >= forceGap) {
+               winner = ring > pinky ? 2 : 3;
+            } else {
+               const ringDelta = ring - previousTherapyValues[2];
+               const pinkyDelta = pinky - previousTherapyValues[3];
+               winner = ringDelta >= pinkyDelta ? 2 : 3;
+            }
+
+            ringPinkyLock = winner;
+            values[winner === 2 ? 3 : 2] = 0;
+         }
+
+         previousTherapyValues = values.slice();
+         return values;
+      }
+
+
+      function getTherapyValues() {
+         const raw = getValues().map(v => Number(v) || 0);
+         const settings = modeSettings[mode];
+
+         // Browser-side safety filter. Even if the bridge is not perfect, idle drift like 0.18 will not count as a press.
+         const deadzone = 0.115;
+         const dominanceGap = 0.065;
+         const press = Math.max(settings.pressThreshold, 0.235);
+
+         let values = raw.map(v => {
+            if (v < deadzone) return 0;
+            return Math.min(1, (v - deadzone) / (1 - deadzone));
+         });
+
+         values = applyRingPinkyLock(values);
+
+         const ranked = values.map((v, i) => ({ v, i })).sort((a, b) => b.v - a.v);
+         const strongest = ranked[0];
+         const second = ranked[1];
+
+         if (strongest.v < press) {
+            return [0, 0, 0, 0];
+         }
+
+         // Anti-crosstalk: if one finger is clearly dominant, silence the weaker accidental lanes.
+         // If two fingers are intentionally held strongly, dual notes still work.
+         if (strongest.v - second.v >= dominanceGap) {
+            values = values.map((v, i) => i === strongest.i ? v : 0);
+         } else {
+            values = values.map(v => v >= press ? v : 0);
+         }
+
+         return values;
+      }
+
+      function laneHeight() {
+         return lanes[0].clientHeight || 540;
+      }
+
+      function targetY() {
+         return laneHeight() - 58;
+      }
+
+      function cleanNotes() {
+         notes.forEach(n => n.el.remove());
+         notes = [];
+      }
+
+      function createNote(lane, type = "tap", groupId = null) {
+         const el = document.createElement("div");
+         el.className = "note " + (type === "hold" ? "hold" : type === "duo" ? "duo" : "");
+         if (type === "hold") {
+            const fill = document.createElement("div");
+            fill.className = "hold-fill";
+            el.appendChild(fill);
+         }
+         lanes[lane].appendChild(el);
+         const n = {
+            lane,
+            type,
+            groupId,
+            y: -125,
+            el,
+            hit: false,
+            judged: false,
+            activeHold: false,
+            holdStartedAt: 0,
+            holdMs: 0,
+            born: performance.now()
+         };
+         notes.push(n);
+         total++;
+      }
+
+      function chooseLane() {
+         const lane = nextLane;
+         const step = Math.random() < 0.5 ? 1 : 3;
+         nextLane = (nextLane + step) % 4;
+         return lane;
+      }
+
+      function spawnNote() {
+         const settings = modeSettings[mode];
+         const r = Math.random();
+         let type = "tap";
+         if (sessionTime > 12 && r < settings.holdChance) {
+            type = "hold";
+         } else if (sessionTime > 24 && r < settings.holdChance + settings.duoChance) {
+            type = "duo";
+         }
+         const lane = chooseLane();
+         if (type === "duo") {
+            const group = "g" + Math.random().toString(16).slice(2);
+            let lane2 = (lane + 1 + Math.floor(Math.random() * 3)) % 4;
+            createNote(lane, "duo", group);
+            createNote(lane2, "duo", group);
+            focusTitle.innerText = "Dual Control";
+            tip.innerText = "Press both glowing fingers calmly. Coordination matters more than speed.";
+            promptEl.innerText = "DUAL • " + laneNames[lane] + " + " + laneNames[lane2];
+         } else {
+            createNote(lane, type);
+            focusTitle.innerText = type === "hold" ? "Hold Control" : "Finger Isolation";
+            tip.innerText = type === "hold"
+               ? "Hold the finger while the long note crosses the green zone, then release calmly."
+               : "Press once when the note reaches the green zone. Do not rush.";
+            promptEl.innerText = (type === "hold" ? "HOLD • " : "TAP • ") + laneNames[lane];
+         }
+      }
+
+      function startGame() {
+         ensureAudio();
+         gameRunId++;
+         const thisRun = gameRunId;
+         playing = true;
+         intro.classList.add("hidden");
+         startBtn.classList.add("hidden");
+         report.classList.remove("show");
+         cleanNotes();
+         particles = [];
+         score = 0;
+         combo = 0;
+         hits = 0;
+         total = 0;
+         misses = 0;
+         holdSuccess = 0;
+         holdFail = 0;
+         reactions = [];
+         fingerHits = [0, 0, 0, 0];
+         fingerMiss = [0, 0, 0, 0];
+         fingerHoldMs = [0, 0, 0, 0];
+         inputDown = [false, false, false, false];
+         lastInputFire = [0, 0, 0, 0];
+         nextLane = Math.floor(Math.random() * 4);
+         sessionTime = 0;
+         sessionLength = modeSettings[mode].session;
+         spawnTimer = modeSettings[mode].spawn * 0.55;
+         last = performance.now();
+         promptEl.innerText = modeSettings[mode].label.toUpperCase() + " SESSION";
+         updateUI();
+         requestAnimationFrame((now) => loop(now, thisRun));
+      }
+
+      function finishGame() {
+         playing = false;
+         cleanNotes();
+         startBtn.classList.remove("hidden");
+         startBtn.innerText = "Restart Session";
+         const acc = total ? Math.round((hits / total) * 100) : 100;
+         const avg = reactions.length ? Math.round(reactions.reduce((a, b) => a + b, 0) / reactions.length) : 0;
+         let weak = 0;
+         let worstScore = -999;
+         for (let i = 0; i < 4; i++) {
+            const attempts = fingerHits[i] + fingerMiss[i];
+            const successRate = fingerHits[i] / Math.max(1, attempts);
+            const holdPenalty = fingerHoldMs[i] < 400 && attempts > 0 ? 0.18 : 0;
+            const weakness = (1 - successRate) + holdPenalty;
+            if (weakness > worstScore) {
+               worstScore = weakness;
+               weak = i;
+            }
+         }
+         rScore.innerText = Math.round(score);
+         rAcc.innerText = acc + "%";
+         rWeak.innerText = laneNames[weak][0] + laneNames[weak].slice(1).toLowerCase();
+         rReact.innerText = avg + "ms";
+         report.classList.add("show");
+         promptEl.innerText = "SESSION COMPLETE";
+      }
+
+      function noteCenter(n) {
+         return n.y + (n.type === "hold" ? 46 : 15);
+      }
+
+      function nearestNote(lane, types = null) {
+         const settings = modeSettings[mode];
+         let best = null;
+         let dist = Infinity;
+         const target = targetY();
+         for (const n of notes) {
+            if (n.lane !== lane || n.hit || n.judged) continue;
+            if (types && !types.includes(n.type)) continue;
+            const d = Math.abs(noteCenter(n) - target);
+            if (d < dist) {
+               dist = d;
+               best = n;
+            }
+         }
+         if (best && dist <= settings.hitWindow) return { note: best, dist };
+         return { note: null, dist: Infinity };
+      }
+
+      function rewardTap(note, dist) {
+         const settings = modeSettings[mode];
+         note.hit = true;
+         note.judged = true;
+         hits++;
+         fingerHits[note.lane]++;
+         combo++;
+         const perfect = dist < settings.hitWindow * 0.36;
+         const bonus = perfect ? 70 : 30;
+         score += 110 + combo * 8 + bonus + (note.type === "duo" ? 25 : 0);
+         reactions.push(Math.max(0, Math.round(performance.now() - note.born - 1000 * (targetY() / settings.speed))));
+         playTone(note.lane, perfect ? "perfect" : "good");
+         popup(perfect ? "PERFECT" : "GOOD");
+         burstLane(note.lane, perfect ? 20 : 12);
+      }
+
+      function startHold(note, dist) {
+         note.activeHold = true;
+         note.holdStartedAt = performance.now();
+         note.holdMs = 0;
+         note.judged = true;
+         combo++;
+         playTone(note.lane, "hold");
+         popup("HOLD");
+         burstLane(note.lane, 10);
+      }
+
+      function completeHold(note) {
+         const settings = modeSettings[mode];
+         note.hit = true;
+         note.activeHold = false;
+         hits++;
+         holdSuccess++;
+         fingerHits[note.lane]++;
+         fingerHoldMs[note.lane] += note.holdMs;
+         score += 190 + combo * 9 + Math.min(140, Math.round(note.holdMs / 8));
+         playTone(note.lane, "perfect");
+         popup("CONTROLLED");
+         burstLane(note.lane, 24);
+      }
+
+      function failLane(lane, text = "TRY AGAIN") {
+         combo = 0;
+         misses++;
+         fingerMiss[lane]++;
+         playTone(lane, "miss");
+         popup(text, "miss");
+      }
+
+      function hitLane(lane) {
+         if (!playing) return;
+         const now = performance.now();
+         if (now - lastInputFire[lane] < 145) return;
+         lastInputFire[lane] = now;
+         const tapCandidate = nearestNote(lane, ["tap", "duo"]);
+         const holdCandidate = nearestNote(lane, ["hold"]);
+         if (holdCandidate.note && holdCandidate.dist <= tapCandidate.dist) {
+            startHold(holdCandidate.note, holdCandidate.dist);
+            return;
+         }
+         if (tapCandidate.note) {
+            rewardTap(tapCandidate.note, tapCandidate.dist);
+            return;
+         }
+         // Only punish if there is a visible nearby note. This prevents random tremor from ruining therapy score.
+         const visible = notes.some(n => n.lane === lane && !n.hit && n.y > 60 && n.y < laneHeight() + 30);
+         if (visible) failLane(lane, "SLOWLY");
+      }
+
+      function releaseLane(lane) {
+         for (const n of notes) {
+            if (n.lane !== lane || n.type !== "hold" || !n.activeHold || n.hit) continue;
+            const settings = modeSettings[mode];
+            if (n.holdMs >= settings.minHoldMs) {
+               completeHold(n);
+            } else {
+               n.activeHold = false;
+               n.hit = true;
+               holdFail++;
+               failLane(lane, "HOLD LONGER");
+               burstLane(lane, 8);
+            }
+         }
+      }
+
+      function burstLane(lane, count) {
+         const rect = lanes[lane].getBoundingClientRect();
+         const wrap = gameWrap.getBoundingClientRect();
+         const x = rect.left - wrap.left + rect.width / 2;
+         const y = rect.bottom - wrap.top - 58;
+         addParticle(x, y, laneColors[lane], count);
+      }
+
+      function drawBackground(dt) {
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
+         bg.addColorStop(0, "rgba(255,255,255,.42)");
+         bg.addColorStop(1, "rgba(234,244,225,.25)");
+         ctx.fillStyle = bg;
+         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+         ctx.strokeStyle = "rgba(18,49,38,.055)";
+         ctx.lineWidth = 2;
+         for (let i = 0; i < 10; i++) {
+            ctx.beginPath();
+            const y = 112 + i * 46 + (sessionTime * 11 % 46);
+            ctx.moveTo(0, y);
+            ctx.bezierCurveTo(205, y - 31, 420, y + 37, 805, y - 12);
+            ctx.stroke();
+         }
+
+         for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+            p.vy += 70 * dt;
+            p.life -= dt;
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.fillStyle = p.color;
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 14;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            if (p.life <= 0) particles.splice(i, 1);
+         }
+         ctx.globalAlpha = 1;
+         ctx.shadowBlur = 0;
+      }
+
+      function updateNotes(dt) {
+         const settings = modeSettings[mode];
+         spawnTimer += dt;
+         if (spawnTimer >= settings.spawn) {
+            spawnTimer = 0;
+            if (notes.length < 8) spawnNote();
+         }
+         const h = laneHeight();
+         for (let i = notes.length - 1; i >= 0; i--) {
+            const n = notes[i];
+            n.y += settings.speed * dt;
+            n.el.style.top = n.y + "px";
+            if (n.type === "hold" && n.activeHold) {
+               n.holdMs = performance.now() - n.holdStartedAt;
+               const fill = n.el.querySelector(".hold-fill");
+               if (fill) {
+                  fill.style.height = Math.min(100, (n.holdMs / settings.minHoldMs) * 100) + "%";
+               }
+               if (n.holdMs >= settings.minHoldMs && noteCenter(n) > targetY() + settings.hitWindow * 0.45) {
+                  completeHold(n);
+               }
+            }
+            if (n.hit || n.y > h + 125) {
+               if (!n.hit && !n.activeHold) {
+                  combo = 0;
+                  misses++;
+                  fingerMiss[n.lane]++;
+                  if (n.type === "hold") holdFail++;
+               }
+               n.el.remove();
+               notes.splice(i, 1);
+            }
+         }
+      }
+
+      function handleInput() {
+         const values = getTherapyValues();
+         const settings = modeSettings[mode];
+         for (let i = 0; i < 4; i++) {
+            const down = values[i] >= Math.max(settings.pressThreshold, 0.235) || keyboardDown[i];
+            const up = values[i] <= settings.releaseThreshold && !keyboardDown[i];
+            if (down && !inputDown[i]) {
+               inputDown[i] = true;
+               hitLane(i);
+            }
+            if (up && inputDown[i]) {
+               inputDown[i] = false;
+               releaseLane(i);
+            }
+         }
+      }
+
+      function updateUI() {
+         const values = getTherapyValues();
+         thumbVal.innerText = values[0].toFixed(2);
+         indexVal.innerText = values[1].toFixed(2);
+         ringVal.innerText = values[2].toFixed(2);
+         middleVal.innerText = values[3].toFixed(2);
+         thumbFill.style.width = Math.round(values[0] * 100) + "%";
+         indexFill.style.width = Math.round(values[1] * 100) + "%";
+         ringFill.style.width = Math.round(values[2] * 100) + "%";
+         middleFill.style.width = Math.round(values[3] * 100) + "%";
+         thumbRow.classList.toggle("active", values[0] > 0.14);
+         indexRow.classList.toggle("active", values[1] > 0.14);
+         ringRow.classList.toggle("active", values[2] > 0.14);
+         middleRow.classList.toggle("active", values[3] > 0.14);
+         lanes.forEach((lane, i) => lane.classList.toggle("active", values[i] > 0.14 || keyboardDown[i]));
+         const acc = total ? Math.round((hits / total) * 100) : 100;
+         const avg = reactions.length ? Math.round(reactions.reduce((a, b) => a + b, 0) / reactions.length) : 0;
+         scoreEl.innerText = Math.round(score);
+         comboEl.innerText = combo;
+         accuracyEl.innerText = acc + "%";
+         reactionEl.innerText = avg + "ms";
+         progressFill.style.width = Math.min(100, Math.round((sessionTime / sessionLength) * 100)) + "%";
+      }
+
+
+      function getStartGripValue() {
+         // Reliable start signal:
+         // The bridge may send global_grip, but if it is weak,
+         // we also calculate from raw finger values before browser-side anti-crosstalk.
+         const thumb = Number(live.thumb) || 0;
+         const index = Number(live.index) || 0;
+         const ring = Number(live.ring) || 0;
+         const pinky = Number(live.pinky !== undefined && live.pinky !== null ? live.pinky : live.middle) || 0;
+         const avg = (thumb + index + ring + pinky) / 4;
+         const maxFinger = Math.max(thumb, index, ring, pinky);
+         const direct = Number(live.global_grip) || 0;
+
+         return Math.max(direct, avg, maxFinger * 0.70);
+      }
+
+      function checkGripStart() {
+         if (playing) return;
+
+         const now = performance.now();
+         const grip = getStartGripValue();
+
+         // Re-arm after release.
+         if (grip < 0.16) {
+            gripStartArmed = true;
+         }
+
+         // One squeeze start. Not 1 second hold.
+         if (gripStartArmed && grip >= 0.32 && now - lastGripStartAt > 1200) {
+            gripStartArmed = false;
+            lastGripStartAt = now;
+            startGame();
+         }
+      }
+
+
+      function monitorConnection() {
+         if (lastPacketAt && performance.now() - lastPacketAt > 1800) {
+            dot.className = "dot err";
+            statusText.innerText = "No live packets";
+            modeText.innerText = "Check bridge";
+         }
+         checkGripStart();
+      }
+
+      function loop(now, runId) {
+         if (!playing || runId !== gameRunId) return;
+         const dt = Math.min(0.034, (now - last) / 1000 || 0.016);
+         last = now;
+         sessionTime += dt;
+         drawBackground(dt);
+         updateNotes(dt);
+         handleInput();
+         updateUI();
+         monitorConnection();
+         if (sessionTime >= sessionLength) {
+            finishGame();
+            return;
+         }
+         requestAnimationFrame((nextNow) => loop(nextNow, runId));
+      }
+
+      function connectWS() {
+         if (wsHandle && (wsHandle.readyState === WebSocket.OPEN || wsHandle.readyState === WebSocket.CONNECTING)) return;
+         try {
+            wsHandle = new WebSocket("ws://127.0.0.1:8765");
+         } catch (e) {
+            scheduleReconnect();
+            return;
+         }
+         wsHandle.onopen = () => {
+            dot.className = "dot ok";
+            statusText.innerText = "Glove connected";
+            modeText.innerText = "Live";
+            lastPacketAt = performance.now();
+         };
+         wsHandle.onclose = () => {
+            dot.className = "dot err";
+            statusText.innerText = "WebSocket disconnected";
+            modeText.innerText = "Retry";
+            scheduleReconnect();
+         };
+         wsHandle.onerror = () => {
+            dot.className = "dot err";
+            statusText.innerText = "WebSocket error";
+            modeText.innerText = "Check bridge";
+         };
+         wsHandle.onmessage = (event) => {
+            try {
+               const data = JSON.parse(event.data);
+               live = Object.assign(live, data);
+               if (live.ring === undefined || live.ring === null) live.ring = live.pinky || live.middle || 0;
+               lastPacketAt = performance.now();
+               dot.className = "dot ok";
+               statusText.innerText = "Glove connected";
+               modeText.innerText = "Live";
+            } catch (e) { }
+         };
+      }
+
+      function scheduleReconnect() {
+         if (reconnectTimer) return;
+         reconnectTimer = setTimeout(() => {
+            reconnectTimer = null;
+            connectWS();
+         }, 1100);
+      }
+
+      document.querySelectorAll(".level-btn").forEach(btn => {
+         btn.addEventListener("click", () => {
+            mode = btn.dataset.mode;
+            document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            promptEl.innerText = modeSettings[mode].label.toUpperCase() + " MODE";
+            if (playing) startGame();
+         });
+      });
+
+      document.addEventListener("keydown", (e) => {
+         if (e.code === "Space") {
+            e.preventDefault();
+            startGame();
+            return;
+         }
+         if (keyMap[e.code] !== undefined) {
+            const lane = keyMap[e.code];
+            if (!keyboardDown[lane]) {
+               keyboardDown[lane] = true;
+               if (!inputDown[lane]) {
+                  inputDown[lane] = true;
+                  hitLane(lane);
+               }
+            }
+         }
+      });
+
+      document.addEventListener("keyup", (e) => {
+         if (keyMap[e.code] !== undefined) {
+            const lane = keyMap[e.code];
+            keyboardDown[lane] = false;
+            inputDown[lane] = false;
+            releaseLane(lane);
+         }
+      });
+
+      startBtn.addEventListener("click", startGame);
+      reportRestart.addEventListener("click", startGame);
+
+      connectWS();
+      drawBackground(0);
+      updateUI();
+      setInterval(monitorConnection, 100);
+   </script>
+</body>
+
+</html>

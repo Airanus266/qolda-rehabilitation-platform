@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+   <title>QOLDA Ornament Master — Kids Therapy Edition</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
+
+   <style>
+      :root {
+         --bg: #FAFCF9;
+         --text: #141B14;
+         --muted: #5A6A5A;
+         --green: #D9EDB8;
+         --green2: #A9D96B;
+         --green3: #79B44C;
+         --green-dark: #123126;
+         --card: #FFFFFF;
+         --line: #E7EFE2;
+         --danger: #D96C6C;
+         --gold: #D5A847;
+         --blue: #6E9BFF;
+         --purple: #B18BE8;
+         --pink: #ECA8C5;
+         --shadow: 0 24px 70px rgba(18, 49, 38, .09);
+      }
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         font-family: 'Outfit', sans-serif
+      }
+
+      body {
+         min-height: 100vh;
+         overflow: hidden;
+         color: var(--text);
+         background:
+            radial-gradient(circle at 10% 10%, rgba(217, 237, 184, .72), transparent 24%),
+            radial-gradient(circle at 90% 8%, rgba(223, 240, 208, .72), transparent 22%),
+            linear-gradient(180deg, #FBFDF9 0%, #F4FAF0 100%);
+      }
+
+      .wrap {
+         height: 100vh;
+         padding: 18px;
+         display: grid;
+         grid-template-columns: 315px 1fr 315px;
+         gap: 18px;
+      }
+
+      .panel {
+         background: rgba(255, 255, 255, .82);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(20px);
+         border-radius: 30px;
+         box-shadow: var(--shadow);
+         padding: 20px;
+         z-index: 10;
+      }
+
+      .logo {
+         font-size: 38px;
+         font-weight: 900;
+         letter-spacing: -.04em;
+         color: var(--green-dark);
+         line-height: 1;
+      }
+
+      .sub {
+         margin-top: 6px;
+         font-size: 11px;
+         letter-spacing: .18em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 700;
+      }
+
+      .cap {
+         margin-top: 20px;
+         font-size: 11px;
+         letter-spacing: .16em;
+         text-transform: uppercase;
+         color: var(--muted);
+         font-weight: 800;
+      }
+
+      .song {
+         margin-top: 8px;
+         font-size: 27px;
+         font-weight: 900;
+         color: var(--green-dark);
+         letter-spacing: -.03em;
+      }
+
+      .txt {
+         margin-top: 8px;
+         font-size: 14px;
+         line-height: 1.58;
+         color: var(--muted);
+      }
+
+      .status {
+         margin-top: 18px;
+         padding: 14px 15px;
+         border-radius: 22px;
+         background: #fff;
+         border: 1px solid var(--line);
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 12px;
+         font-size: 14px;
+         font-weight: 700;
+      }
+
+      .dot {
+         width: 11px;
+         height: 11px;
+         border-radius: 999px;
+         background: #C2C8C0;
+         display: inline-block;
+         margin-right: 8px;
+         vertical-align: -1px;
+      }
+
+      .dot.ok {
+         background: #61C681;
+         box-shadow: 0 0 0 6px rgba(97, 198, 129, .14)
+      }
+
+      .dot.err {
+         background: var(--danger);
+         box-shadow: 0 0 0 6px rgba(217, 108, 108, .14)
+      }
+
+      .bar {
+         height: 11px;
+         border-radius: 999px;
+         background: #EEF4EA;
+         overflow: hidden
+      }
+
+      .fill {
+         height: 100%;
+         width: 0%;
+         border-radius: 999px;
+         background: linear-gradient(90deg, var(--green), var(--green2));
+         transition: .12s linear;
+      }
+
+      .level-buttons {
+         display: grid;
+         gap: 8px;
+         margin-top: 12px;
+         max-height: 270px;
+         overflow: auto;
+         padding-right: 2px
+      }
+
+      .level-btn {
+         border: none;
+         border-radius: 18px;
+         padding: 12px 14px;
+         background: #fff;
+         border: 1px solid var(--line);
+         color: var(--green-dark);
+         font-weight: 900;
+         cursor: pointer;
+         text-align: left;
+         transition: .2s ease;
+      }
+
+      .level-btn:hover {
+         transform: translateY(-1px)
+      }
+
+      .level-btn.active {
+         background: linear-gradient(135deg, var(--green), #F4FFE5);
+         border-color: #B8D889;
+         box-shadow: 0 12px 28px rgba(169, 217, 107, .20);
+      }
+
+      .finger-map {
+         margin-top: 14px;
+         display: grid;
+         gap: 9px
+      }
+
+      .finger-row {
+         padding: 11px 13px;
+         border-radius: 18px;
+         background: #fff;
+         border: 1px solid var(--line);
+         transition: .18s ease;
+      }
+
+      .finger-row.active {
+         border-color: #A9D96B;
+         box-shadow: 0 12px 30px rgba(169, 217, 107, .18);
+         transform: translateY(-2px);
+      }
+
+      .fr-top {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         font-size: 13px;
+         margin-bottom: 8px;
+      }
+
+      .fr-name {
+         font-weight: 800
+      }
+
+      .fr-val {
+         color: var(--muted);
+         font-weight: 700
+      }
+
+      .center {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         min-width: 0;
+      }
+
+      .stage {
+         width: 100%;
+         max-width: 1050px;
+         height: calc(100vh - 36px);
+         border-radius: 34px;
+         padding: 16px;
+         background: rgba(255, 255, 255, .58);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(20px);
+         box-shadow: var(--shadow);
+      }
+
+      .hero {
+         position: relative;
+         width: 100%;
+         height: 100%;
+         border-radius: 26px;
+         overflow: hidden;
+         background:
+            radial-gradient(circle at 50% 22%, rgba(255, 255, 255, .98), rgba(255, 255, 255, .40) 26%, transparent 52%),
+            radial-gradient(circle at 16% 20%, rgba(217, 237, 184, .42), transparent 34%),
+            radial-gradient(circle at 86% 16%, rgba(213, 168, 71, .13), transparent 28%),
+            linear-gradient(180deg, #F8FCF5 0%, #EAF4E1 100%);
+      }
+
+      .back-btn {
+         position: absolute;
+         left: 18px;
+         top: 18px;
+         z-index: 30;
+         text-decoration: none;
+         color: var(--green-dark);
+         background: rgba(255, 255, 255, .84);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(14px);
+         padding: 12px 18px;
+         border-radius: 999px;
+         font-size: 14px;
+         font-weight: 900;
+         box-shadow: 0 12px 30px rgba(18, 49, 38, .10);
+         transition: .2s ease;
+      }
+
+      .back-btn:hover {
+         transform: translateY(-2px)
+      }
+
+      .top-chip {
+         position: absolute;
+         left: 50%;
+         top: 18px;
+         transform: translateX(-50%);
+         z-index: 20;
+         padding: 12px 18px;
+         border-radius: 999px;
+         background: rgba(255, 255, 255, .82);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(14px);
+         box-shadow: 0 14px 35px rgba(18, 49, 38, .10);
+         color: var(--green-dark);
+         font-size: 14px;
+         font-weight: 900;
+         letter-spacing: .05em;
+         text-transform: uppercase;
+         display: flex;
+         align-items: center;
+         gap: 10px;
+      }
+
+      .pulse-dot {
+         width: 9px;
+         height: 9px;
+         border-radius: 50%;
+         background: var(--green2);
+         box-shadow: 0 0 0 7px rgba(169, 217, 107, .22);
+      }
+
+      .canvas-wrap {
+         position: absolute;
+         left: 50%;
+         top: 54%;
+         transform: translate(-50%, -50%);
+         width: min(850px, 88%);
+         height: min(625px, 72%);
+         border-radius: 34px;
+         background:
+            linear-gradient(180deg, rgba(255, 255, 255, .88), rgba(255, 255, 255, .54)),
+            radial-gradient(circle at 50% 50%, rgba(217, 237, 184, .28), transparent 60%);
+         border: 1px solid rgba(255, 255, 255, .98);
+         box-shadow:
+            inset 0 0 45px rgba(255, 255, 255, .34),
+            0 28px 80px rgba(18, 49, 38, .12);
+         overflow: hidden;
+      }
+
+      canvas {
+         position: absolute;
+         inset: 0;
+         width: 100%;
+         height: 100%
+      }
+
+      .start {
+         position: absolute;
+         left: 50%;
+         bottom: 24px;
+         transform: translateX(-50%);
+         z-index: 25;
+         border: none;
+         border-radius: 999px;
+         padding: 15px 34px;
+         color: #fff;
+         background: linear-gradient(135deg, #123126, #1D6B4C);
+         font-size: 17px;
+         font-weight: 900;
+         cursor: pointer;
+         box-shadow: 0 18px 40px rgba(18, 49, 38, .23);
+         transition: .25s ease;
+      }
+
+      .start:hover {
+         transform: translateX(-50%) translateY(-3px)
+      }
+
+      .overlay-message {
+         position: absolute;
+         z-index: 22;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         padding: 24px 28px;
+         border-radius: 28px;
+         background: rgba(255, 255, 255, .88);
+         border: 1px solid rgba(255, 255, 255, .96);
+         backdrop-filter: blur(18px);
+         box-shadow: 0 20px 50px rgba(18, 49, 38, .12);
+         text-align: center;
+         width: min(540px, 84%);
+      }
+
+      .overlay-message h2 {
+         font-size: 38px;
+         letter-spacing: -.04em;
+         color: var(--green-dark);
+      }
+
+      .overlay-message p {
+         margin-top: 8px;
+         color: var(--muted);
+         line-height: 1.55;
+      }
+
+      .hidden {
+         display: none
+      }
+
+      .metric-box {
+         padding: 17px 16px;
+         border-radius: 22px;
+         background: #fff;
+         border: 1px solid var(--line);
+         margin-bottom: 12px;
+         text-align: center;
+      }
+
+      .num {
+         font-size: 35px;
+         font-weight: 900;
+         color: var(--green-dark);
+         line-height: 1;
+      }
+
+      .lab {
+         margin-top: 7px;
+         font-size: 11px;
+         letter-spacing: .16em;
+         text-transform: uppercase;
+         font-weight: 800;
+         color: var(--muted);
+      }
+
+      .next {
+         margin-top: 18px;
+         padding: 18px;
+         border-radius: 24px;
+         background: #fff;
+         border: 1px solid var(--line);
+         text-align: center;
+      }
+
+      .finger {
+         margin-top: 8px;
+         font-size: 32px;
+         font-weight: 900;
+         color: var(--green-dark);
+      }
+
+      .tip {
+         margin-top: 10px;
+         color: var(--muted);
+         font-size: 14px;
+         line-height: 1.5;
+      }
+
+      .quality {
+         margin-top: 12px;
+         display: grid;
+         gap: 10px
+      }
+
+      .qrow {
+         display: flex;
+         justify-content: space-between;
+         color: var(--muted);
+         font-size: 14px;
+         font-weight: 700;
+      }
+
+      .popup {
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         font-size: 56px;
+         font-weight: 900;
+         color: var(--green-dark);
+         text-shadow: 0 14px 38px rgba(18, 49, 38, .12);
+         animation: pop .72s forwards;
+         pointer-events: none;
+         z-index: 999;
+      }
+
+      .popup.miss {
+         color: var(--danger)
+      }
+
+      @keyframes pop {
+         0% {
+            opacity: 0;
+            transform: translate(-50%, -48%) scale(.72)
+         }
+
+         22% {
+            opacity: 1
+         }
+
+         100% {
+            opacity: 0;
+            transform: translate(-50%, -62%) scale(1.15)
+         }
+      }
+
+      @media(max-width:1050px) {
+         body {
+            overflow: auto
+         }
+
+         .wrap {
+            height: auto;
+            min-height: 100vh;
+            grid-template-columns: 1fr
+         }
+
+         .stage {
+            height: 78vh
+         }
+      }
+   </style>
+</head>
+
+<body>
+   <div class="wrap">
+      <aside class="panel">
+         <div class="logo">QOLDA</div>
+         <div class="sub">Robot Meets Culture</div>
+
+         <div class="cap">Training Mode</div>
+         <div class="song">Ornament Master</div>
+         <div class="txt">Playful Kazakh ornament restoration for children: one calm finger press creates one magical
+            cultural stroke.</div>
+
+         <div class="status">
+            <div><span id="dot" class="dot"></span><span id="statusText">Connecting...</span></div>
+            <div id="modeText">Glove</div>
+         </div>
+
+         <div class="cap">Adventure Levels</div>
+         <div class="level-buttons" id="levelButtons"></div>
+
+         <div class="cap">Progress</div>
+         <div class="bar">
+            <div class="fill" id="progressFill"></div>
+         </div>
+
+         <div class="cap">Live Finger Input</div>
+         <div class="finger-map">
+            <div class="finger-row" id="thumbRow">
+               <div class="fr-top"><span class="fr-name">Thumb / Up</span><span id="thumbVal" class="fr-val">0.00</span>
+               </div>
+               <div class="bar">
+                  <div class="fill" id="thumbFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="indexRow">
+               <div class="fr-top"><span class="fr-name">Index / Right</span><span id="indexVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="indexFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="ringRow">
+               <div class="fr-top"><span class="fr-name">Ring / Down</span><span id="ringVal" class="fr-val">0.00</span>
+               </div>
+               <div class="bar">
+                  <div class="fill" id="ringFill"></div>
+               </div>
+            </div>
+            <div class="finger-row" id="pinkyRow">
+               <div class="fr-top"><span class="fr-name">Pinky / Left</span><span id="pinkyVal"
+                     class="fr-val">0.00</span></div>
+               <div class="bar">
+                  <div class="fill" id="pinkyFill"></div>
+               </div>
+            </div>
+         </div>
+
+         <div class="cap">Fallback Test</div>
+         <div class="txt">Keyboard: ↑ Thumb, → Index, ↓ Ring, ← Pinky, Space restart.</div>
+      </aside>
+
+      <main class="center">
+         <div class="stage">
+            <div class="hero">
+               <a href="index.html" class="back-btn">← Back to Hub</a>
+               <div class="top-chip"><span class="pulse-dot"></span><span id="prompt">USE THE REQUIRED FINGER</span>
+               </div>
+               <div class="canvas-wrap"><canvas id="canvas" width="850" height="625"></canvas></div>
+               <div class="overlay-message" id="intro">
+                  <h2>Ornament Master</h2>
+                  <p>Restore magical Kazakh ornaments with finger-specific movements. No holding spam: release calmly
+                     before the next stroke.</p>
+               </div>
+               <button class="start" id="startBtn">Start Ornament</button>
+            </div>
+         </div>
+      </main>
+
+      <aside class="panel">
+         <div class="metric-box">
+            <div class="num" id="score">0</div>
+            <div class="lab">Score</div>
+         </div>
+         <div class="metric-box">
+            <div class="num" id="combo">0</div>
+            <div class="lab">Combo</div>
+         </div>
+         <div class="metric-box">
+            <div class="num" id="accuracy">100%</div>
+            <div class="lab">Accuracy</div>
+         </div>
+         <div class="metric-box">
+            <div class="num" id="best">0</div>
+            <div class="lab">Best</div>
+         </div>
+
+         <div class="next">
+            <div class="cap">Required Finger</div>
+            <div class="finger" id="requiredFinger">THUMB</div>
+            <div class="tip" id="tip">Press the required finger once, then release before the next stroke.</div>
+            <div class="quality">
+               <div class="qrow"><span>Up Stroke</span><span>Thumb</span></div>
+               <div class="qrow"><span>Right Stroke</span><span>Index</span></div>
+               <div class="qrow"><span>Down Stroke</span><span>Ring</span></div>
+               <div class="qrow"><span>Left Stroke</span><span>Pinky</span></div>
+            </div>
+         </div>
+      </aside>
+   </div>
+
+   <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const dot = document.getElementById("dot");
+      const statusText = document.getElementById("statusText");
+      const modeText = document.getElementById("modeText");
+      const intro = document.getElementById("intro");
+      const startBtn = document.getElementById("startBtn");
+      const levelButtons = document.getElementById("levelButtons");
+
+      const scoreEl = document.getElementById("score");
+      const comboEl = document.getElementById("combo");
+      const accuracyEl = document.getElementById("accuracy");
+      const bestEl = document.getElementById("best");
+      const progressFill = document.getElementById("progressFill");
+      const requiredFingerEl = document.getElementById("requiredFinger");
+      const tip = document.getElementById("tip");
+      const promptEl = document.getElementById("prompt");
+
+      const thumbVal = document.getElementById("thumbVal");
+      const indexVal = document.getElementById("indexVal");
+      const ringVal = document.getElementById("ringVal");
+      const pinkyVal = document.getElementById("pinkyVal");
+      const thumbFill = document.getElementById("thumbFill");
+      const indexFill = document.getElementById("indexFill");
+      const ringFill = document.getElementById("ringFill");
+      const pinkyFill = document.getElementById("pinkyFill");
+      const thumbRow = document.getElementById("thumbRow");
+      const indexRow = document.getElementById("indexRow");
+      const ringRow = document.getElementById("ringRow");
+      const pinkyRow = document.getElementById("pinkyRow");
+
+      let live = { thumb: 0, index: 0, ring: 0, pinky: 0, middle: 0, global_grip: 0 };
+      let smooth = { thumb: 0, index: 0, ring: 0, pinky: 0 };
+      let currentLevel = 0;
+      let step = 0;
+      let score = 0;
+      let combo = 0;
+      let hits = 0;
+      let attempts = 0;
+      let best = Number(localStorage.getItem("qolda_ornament_master_kids_best") || 0);
+      let playing = false;
+      let inputLocked = false;
+      let lastJudgeMs = 0;
+      let lastAnyFinger = "none";
+      let particles = [];
+      let audioCtx = null;
+      let wsHandle = null;
+      let reconnectTimer = null;
+      let lastPacketAt = 0;
+      let animationId = null;
+
+      bestEl.innerText = best;
+
+      const fingerLabels = { thumb: "THUMB", index: "INDEX", ring: "RING", pinky: "PINKY" };
+      const fingerColors = { thumb: "#A9D96B", index: "#D5A847", ring: "#B18BE8", pinky: "#6E9BFF" };
+      const fingerIcons = { thumb: "↑", index: "→", ring: "↓", pinky: "←" };
+
+      function seg(x1, y1, x2, y2, finger, kind = "line") {
+         return { x1, y1, x2, y2, finger, kind, done: false };
+      }
+
+      function levelQoshqar() {
+         return [
+            seg(225, 410, 225, 305, "thumb"), seg(225, 305, 300, 305, "index"), seg(300, 305, 300, 235, "thumb"),
+            seg(300, 235, 382, 235, "index"), seg(382, 235, 382, 312, "ring"), seg(382, 312, 468, 312, "index"),
+            seg(468, 312, 468, 235, "thumb"), seg(468, 235, 550, 235, "index"), seg(550, 235, 550, 305, "ring"),
+            seg(550, 305, 625, 305, "index"), seg(625, 305, 625, 410, "ring"), seg(625, 410, 520, 410, "pinky"),
+            seg(520, 410, 520, 350, "thumb"), seg(520, 350, 330, 350, "pinky"), seg(330, 350, 330, 410, "ring"),
+            seg(330, 410, 225, 410, "pinky")
+         ];
+      }
+
+      function levelShanyraq() {
+         const cx = 425, cy = 306, r = 164;
+         return [
+            seg(cx, cy - r, cx + 116, cy - 116, "index"), seg(cx + 116, cy - 116, cx + r, cy, "ring"),
+            seg(cx + r, cy, cx + 116, cy + 116, "ring"), seg(cx + 116, cy + 116, cx, cy + r, "pinky"),
+            seg(cx, cy + r, cx - 116, cy + 116, "pinky"), seg(cx - 116, cy + 116, cx - r, cy, "thumb"),
+            seg(cx - r, cy, cx - 116, cy - 116, "thumb"), seg(cx - 116, cy - 116, cx, cy - r, "index"),
+            seg(cx - 76, cy - 76, cx + 76, cy - 76, "index"), seg(cx + 76, cy - 76, cx + 76, cy + 76, "ring"),
+            seg(cx + 76, cy + 76, cx - 76, cy + 76, "pinky"), seg(cx - 76, cy + 76, cx - 76, cy - 76, "thumb"),
+            seg(cx, cy, cx, cy - r, "thumb"), seg(cx, cy, cx + r, cy, "index"), seg(cx, cy, cx, cy + r, "ring"), seg(cx, cy, cx - r, cy, "pinky"),
+            seg(cx, cy, cx + 116, cy - 116, "index"), seg(cx, cy, cx + 116, cy + 116, "ring"),
+            seg(cx, cy, cx - 116, cy + 116, "pinky"), seg(cx, cy, cx - 116, cy - 116, "thumb")
+         ];
+      }
+
+      function levelTulpar() {
+         return [
+            seg(210, 390, 290, 300, "thumb"), seg(290, 300, 365, 390, "index"), seg(365, 390, 445, 300, "thumb"), seg(445, 300, 525, 390, "index"),
+            seg(525, 390, 620, 265, "thumb"), seg(620, 265, 560, 250, "pinky"), seg(560, 250, 520, 205, "thumb"), seg(520, 205, 470, 245, "pinky"),
+            seg(470, 245, 390, 190, "pinky"), seg(390, 190, 340, 250, "ring"), seg(340, 250, 255, 240, "pinky"), seg(255, 240, 210, 390, "ring"),
+            seg(285, 380, 285, 455, "ring"), seg(285, 455, 350, 455, "index"), seg(512, 380, 512, 455, "ring"), seg(512, 455, 585, 455, "index")
+         ];
+      }
+
+      function levelRainbowCarpet() {
+         return [
+            seg(185, 150, 665, 150, "index"), seg(665, 150, 665, 475, "ring"), seg(665, 475, 185, 475, "pinky"), seg(185, 475, 185, 150, "thumb"),
+            seg(425, 180, 600, 312, "index"), seg(600, 312, 425, 445, "ring"), seg(425, 445, 250, 312, "pinky"), seg(250, 312, 425, 180, "thumb"),
+            seg(310, 235, 375, 235, "index"), seg(375, 235, 375, 295, "ring"), seg(540, 235, 475, 235, "pinky"), seg(475, 235, 475, 295, "ring"),
+            seg(310, 390, 375, 390, "index"), seg(375, 390, 375, 330, "thumb"), seg(540, 390, 475, 390, "pinky"), seg(475, 390, 475, 330, "thumb"),
+            seg(220, 205, 275, 205, "index"), seg(275, 205, 275, 260, "ring"), seg(630, 420, 575, 420, "pinky"), seg(575, 420, 575, 365, "thumb")
+         ];
+      }
+
+      function levelBerkut() {
+         return [
+            seg(425, 170, 425, 445, "ring"), seg(425, 250, 565, 190, "index"), seg(565, 190, 635, 240, "ring"), seg(635, 240, 545, 285, "pinky"),
+            seg(545, 285, 665, 345, "index"), seg(665, 345, 555, 390, "pinky"), seg(555, 390, 425, 330, "pinky"),
+            seg(425, 250, 285, 190, "pinky"), seg(285, 190, 215, 240, "ring"), seg(215, 240, 305, 285, "index"),
+            seg(305, 285, 185, 345, "pinky"), seg(185, 345, 295, 390, "index"), seg(295, 390, 425, 330, "index"),
+            seg(425, 170, 480, 225, "index"), seg(425, 170, 370, 225, "pinky"), seg(425, 445, 495, 500, "index"), seg(425, 445, 355, 500, "pinky")
+         ];
+      }
+
+      function levelQoldaBot() {
+         return [
+            seg(300, 185, 550, 185, "index"), seg(550, 185, 550, 425, "ring"), seg(550, 425, 300, 425, "pinky"), seg(300, 425, 300, 185, "thumb"),
+            seg(350, 240, 410, 240, "index"), seg(410, 240, 410, 300, "ring"), seg(500, 240, 440, 240, "pinky"), seg(440, 240, 440, 300, "ring"),
+            seg(365, 360, 485, 360, "index"), seg(485, 360, 485, 390, "ring"), seg(485, 390, 365, 390, "pinky"), seg(365, 390, 365, 360, "thumb"),
+            seg(300, 305, 240, 305, "pinky"), seg(240, 305, 210, 360, "ring"), seg(550, 305, 610, 305, "index"), seg(610, 305, 640, 360, "ring"),
+            seg(365, 185, 365, 130, "thumb"), seg(365, 130, 335, 110, "pinky"), seg(485, 185, 485, 130, "thumb"), seg(485, 130, 515, 110, "index")
+         ];
+      }
+
+      const levels = [
+         { name: "1 — Қошқар мүйіз", title: "Қошқар мүйіз", meaning: "Ram horn ornament: strength, abundance and confidence.", maker: levelQoshqar, icon: "🐏" },
+         { name: "2 — Шаңырақ", title: "Шаңырақ", meaning: "Yurt roof crown: home, unity and family.", maker: levelShanyraq, icon: "🏠" },
+         { name: "3 — Тұлпар", title: "Тұлпар", meaning: "Mythical winged horse: movement, courage and recovery.", maker: levelTulpar, icon: "🐎" },
+         { name: "4 — Rainbow Kilem", title: "Rainbow Kilem", meaning: "Carpet pattern: repetition, rhythm and motor learning.", maker: levelRainbowCarpet, icon: "🌈" },
+         { name: "5 — Бүркіт Wings", title: "Berkut Wings", meaning: "Eagle wings: freedom, focus and control.", maker: levelBerkut, icon: "🦅" },
+         { name: "6 — QOLDA Bot", title: "QOLDA Bot", meaning: "Robot helper: technology, play and rehabilitation.", maker: levelQoldaBot, icon: "🤖" }
+      ];
+
+      let segments = levels[0].maker();
+
+      function buildLevelButtons() {
+         levelButtons.innerHTML = "";
+         levels.forEach((lvl, i) => {
+            const btn = document.createElement("button");
+            btn.className = "level-btn" + (i === currentLevel ? " active" : "");
+            btn.dataset.level = i;
+            btn.innerText = lvl.name;
+            btn.addEventListener("click", () => changeLevel(i));
+            levelButtons.appendChild(btn);
+         });
+      }
+
+      function ensureAudio() {
+         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+         if (audioCtx.state === "suspended") audioCtx.resume();
+      }
+      function playTone(finger, kind = "good") {
+         ensureAudio();
+         const now = audioCtx.currentTime;
+         const freqs = { thumb: 261.63, index: 329.63, ring: 392.00, pinky: 523.25 };
+         const base = freqs[finger] || 261.63;
+         const master = audioCtx.createGain();
+         const filter = audioCtx.createBiquadFilter();
+         filter.type = "lowpass";
+         filter.frequency.setValueAtTime(kind === "bad" ? 520 : 2600, now);
+         master.gain.setValueAtTime(0.0001, now);
+         master.gain.exponentialRampToValueAtTime(kind === "bad" ? 0.025 : 0.05, now + 0.012);
+         master.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+         filter.connect(master);
+         master.connect(audioCtx.destination);
+
+         const osc = audioCtx.createOscillator();
+         const g = audioCtx.createGain();
+         osc.type = kind === "bad" ? "triangle" : "sine";
+         osc.frequency.setValueAtTime(kind === "bad" ? 140 : base, now);
+         g.gain.setValueAtTime(0.0001, now);
+         g.gain.exponentialRampToValueAtTime(0.6, now + 0.014);
+         g.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+         osc.connect(g); g.connect(filter); osc.start(now); osc.stop(now + 0.28);
+
+         if (kind !== "bad") {
+            const osc2 = audioCtx.createOscillator();
+            const g2 = audioCtx.createGain();
+            osc2.type = "triangle";
+            osc2.frequency.setValueAtTime(base * 1.5, now + 0.04);
+            g2.gain.setValueAtTime(0.0001, now + 0.04);
+            g2.gain.exponentialRampToValueAtTime(0.22, now + 0.06);
+            g2.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+            osc2.connect(g2); g2.connect(filter); osc2.start(now + 0.04); osc2.stop(now + 0.28);
+         }
+      }
+
+      function popup(text, type = "ok") {
+         const d = document.createElement("div");
+         d.className = "popup " + (type === "miss" ? "miss" : "");
+         d.innerText = text;
+         document.body.appendChild(d);
+         setTimeout(() => d.remove(), 720);
+      }
+
+      function addParticles(x, y, color, count = 18) {
+         for (let i = 0; i < count; i++) {
+            particles.push({
+               x, y,
+               vx: (Math.random() - 0.5) * 170,
+               vy: (Math.random() - 0.95) * 170,
+               life: 0.75 + Math.random() * 0.28,
+               size: 2 + Math.random() * 4,
+               color
+            });
+         }
+      }
+
+      function cleanRawValue(v) {
+         v = Number(v) || 0;
+         if (v < 0.09) return 0;
+         return Math.min(1, (v - 0.09) / 0.91);
+      }
+      function readInputs() {
+         // Real mapping for your current glove:
+         // thumb = up, index = right, ring = down, pinky = left.
+         let raw = {
+            thumb: Number(live.thumb) || 0,
+            index: Number(live.index) || 0,
+            ring: Number(live.ring) || 0,
+            pinky: Number(live.pinky !== undefined && live.pinky !== null ? live.pinky : live.middle) || 0
+         };
+         for (const f of ["thumb", "index", "ring", "pinky"]) {
+            raw[f] = cleanRawValue(raw[f]);
+            smooth[f] = smooth[f] * 0.58 + raw[f] * 0.42;
+         }
+
+         // Anti-crosstalk: if ring and pinky accidentally rise together, keep strongest.
+         const rpGap = Math.abs(smooth.ring - smooth.pinky);
+         if (Math.max(smooth.ring, smooth.pinky) > 0.18 && rpGap > 0.02) {
+            if (smooth.ring > smooth.pinky) smooth.pinky = 0;
+            else smooth.ring = 0;
+         }
+
+         return { ...smooth };
+      }
+      function strongestFinger(values) {
+         let bestF = null;
+         let bestV = 0;
+         for (const f of ["thumb", "index", "ring", "pinky"]) {
+            if (values[f] > bestV) {
+               bestV = values[f];
+               bestF = f;
+            }
+         }
+         if (bestV < 0.18) return null;
+         return bestF;
+      }
+      function allReleased(values) {
+         return values.thumb < 0.105 && values.index < 0.105 && values.ring < 0.105 && values.pinky < 0.105;
+      }
+      function currentSeg() { return segments[step]; }
+
+      function resetGame() {
+         ensureAudio();
+         playing = true;
+         step = 0;
+         score = 0;
+         combo = 0;
+         hits = 0;
+         attempts = 0;
+         inputLocked = false;
+         lastJudgeMs = 0;
+         lastAnyFinger = "none";
+         segments = levels[currentLevel].maker();
+         segments.forEach(s => s.done = false);
+         intro.classList.add("hidden");
+         startBtn.innerText = "Restart Ornament";
+         tip.innerText = levels[currentLevel].meaning + " Press once, then release calmly.";
+         updateRequired();
+      }
+      function changeLevel(lvl) {
+         currentLevel = lvl;
+         buildLevelButtons();
+         resetGame();
+      }
+
+      function judge(finger) {
+         if (!playing || !currentSeg()) return;
+         const expected = currentSeg().finger;
+         attempts++;
+
+         if (finger === expected) {
+            currentSeg().done = true;
+            hits++;
+            combo++;
+            score += 100 + combo * 9;
+            addParticles(currentSeg().x2, currentSeg().y2, fingerColors[finger], 18);
+            playTone(finger, "good");
+            popup(combo >= 5 ? "COMBO +" + combo : "CORRECT");
+            step++;
+
+            if (step >= segments.length) {
+               playing = false;
+               score += 450;
+               popup("ORNAMENT RESTORED");
+               tip.innerText = "Complete: " + levels[currentLevel].meaning;
+               startBtn.innerText = "Replay Ornament";
+               startBtn.classList.remove("hidden");
+            }
+         } else {
+            combo = 0;
+            playTone(finger, "bad");
+            popup("NEED " + fingerLabels[expected], "miss");
+            tip.innerText = "Needed: " + fingerLabels[expected] + ". Release first, then press calmly.";
+         }
+
+         if (score > best) {
+            best = score;
+            localStorage.setItem("qolda_ornament_master_kids_best", best);
+         }
+         updateRequired();
+      }
+
+      function handleInput() {
+         const values = readInputs();
+         if (!playing) return;
+
+         if (inputLocked) {
+            if (allReleased(values)) {
+               inputLocked = false;
+               lastAnyFinger = "none";
+            }
+            return;
+         }
+
+         const now = performance.now();
+         if (now - lastJudgeMs < 260) return;
+
+         const f = strongestFinger(values);
+         if (!f) return;
+
+         const ranked = Object.entries(values).sort((a, b) => b[1] - a[1]);
+         const gap = ranked[0][1] - ranked[1][1];
+
+         // If accidental multiple fingers are almost equal, wait one frame instead of judging wrong.
+         if (ranked[0][1] < 0.24) return;
+         if (gap < 0.035 && ranked[1][1] > 0.18) return;
+
+         lastJudgeMs = now;
+         inputLocked = true;
+         lastAnyFinger = f;
+         judge(f);
+      }
+
+      function updateRequired() {
+         const s = currentSeg();
+         if (s) {
+            requiredFingerEl.innerText = fingerLabels[s.finger];
+            promptEl.innerText = "NEXT STROKE • " + fingerLabels[s.finger] + " " + fingerIcons[s.finger];
+         } else {
+            requiredFingerEl.innerText = "DONE";
+            promptEl.innerText = "ORNAMENT RESTORED";
+         }
+      }
+
+      function drawBackground() {
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
+         bg.addColorStop(0, "rgba(255,255,255,.62)");
+         bg.addColorStop(1, "rgba(234,244,225,.36)");
+         ctx.fillStyle = bg;
+         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+         // playful floating cultural medallions
+         const lvl = levels[currentLevel];
+         ctx.save();
+         ctx.globalAlpha = .08;
+         ctx.fillStyle = "#123126";
+         ctx.font = "900 86px Outfit";
+         ctx.textAlign = "center";
+         ctx.fillText(lvl.icon, 110, 130);
+         ctx.fillText(lvl.icon, 740, 520);
+         ctx.restore();
+
+         // premium border
+         ctx.strokeStyle = "rgba(18,49,38,.075)";
+         ctx.lineWidth = 2;
+         roundRect(38, 38, canvas.width - 76, canvas.height - 76, 28, true, false);
+
+         // small kid-friendly pattern hints
+         for (let i = 0; i < 12; i++) {
+            const x = 76 + i * 62;
+            ctx.strokeStyle = i % 2 ? "rgba(213,168,71,.16)" : "rgba(169,217,107,.20)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(x, 58);
+            ctx.lineTo(x + 20, 78);
+            ctx.lineTo(x + 40, 58);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, canvas.height - 58);
+            ctx.lineTo(x + 20, canvas.height - 78);
+            ctx.lineTo(x + 40, canvas.height - 58);
+            ctx.stroke();
+         }
+
+         // title inside canvas
+         ctx.save();
+         ctx.fillStyle = "rgba(18,49,38,.70)";
+         ctx.font = "900 24px Outfit";
+         ctx.textAlign = "center";
+         ctx.fillText(levels[currentLevel].title, canvas.width / 2, 82);
+         ctx.font = "700 13px Outfit";
+         ctx.fillStyle = "rgba(90,106,90,.78)";
+         ctx.fillText(levels[currentLevel].meaning, canvas.width / 2, 105);
+         ctx.restore();
+      }
+
+      function roundRect(x, y, w, h, r, stroke, fill) {
+         ctx.beginPath();
+         ctx.moveTo(x + r, y);
+         ctx.arcTo(x + w, y, x + w, y + h, r);
+         ctx.arcTo(x + w, y + h, x, y + h, r);
+         ctx.arcTo(x, y + h, x, y, r);
+         ctx.arcTo(x, y, x + w, y, r);
+         ctx.closePath();
+         if (fill) ctx.fill();
+         if (stroke) ctx.stroke();
+      }
+
+      function drawSegment(s, active = false) {
+         ctx.lineCap = "round";
+         ctx.lineJoin = "round";
+
+         // guide glow
+         ctx.beginPath();
+         ctx.moveTo(s.x1, s.y1);
+         ctx.lineTo(s.x2, s.y2);
+         ctx.strokeStyle = s.done ? "rgba(169,217,107,.30)" : active ? "rgba(217,237,184,.52)" : "rgba(217,237,184,.22)";
+         ctx.lineWidth = active ? 42 : 28;
+         ctx.stroke();
+
+         // main line
+         ctx.beginPath();
+         ctx.moveTo(s.x1, s.y1);
+         ctx.lineTo(s.x2, s.y2);
+         ctx.strokeStyle = s.done ? "rgba(121,180,76,.94)" : active ? "rgba(18,49,38,.68)" : "rgba(18,49,38,.18)";
+         ctx.lineWidth = active ? 15 : s.done ? 12 : 9;
+         if (s.done) {
+            ctx.shadowColor = "rgba(121,180,76,.45)";
+            ctx.shadowBlur = 16;
+         }
+         ctx.stroke();
+         ctx.shadowBlur = 0;
+
+         // arrow
+         const mx = (s.x1 + s.x2) / 2, my = (s.y1 + s.y2) / 2;
+         const ang = Math.atan2(s.y2 - s.y1, s.x2 - s.x1);
+         ctx.save();
+         ctx.translate(mx, my);
+         ctx.rotate(ang);
+         ctx.fillStyle = s.done ? "#79B44C" : fingerColors[s.finger];
+         ctx.beginPath();
+         ctx.moveTo(17, 0);
+         ctx.lineTo(-8, -10);
+         ctx.lineTo(-8, 10);
+         ctx.closePath();
+         ctx.fill();
+         ctx.restore();
+
+         // cute active node
+         if (active) {
+            ctx.beginPath();
+            ctx.fillStyle = fingerColors[s.finger];
+            ctx.arc(s.x1, s.y1, 15, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = "#fff";
+            ctx.font = "900 18px Outfit";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(fingerIcons[s.finger], s.x1, s.y1);
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(255,255,255,.86)";
+            ctx.lineWidth = 3;
+            ctx.arc(s.x1, s.y1, 24, 0, Math.PI * 2);
+            ctx.stroke();
+         }
+      }
+
+      function drawPencil() {
+         const s = currentSeg() || segments[segments.length - 1];
+         if (!s) return;
+         const x = s.done ? s.x2 : s.x1;
+         const y = s.done ? s.y2 : s.y1;
+         const angle = Math.atan2(s.y2 - s.y1, s.x2 - s.x1);
+
+         ctx.save();
+         ctx.translate(x, y);
+         ctx.rotate(angle);
+
+         ctx.beginPath();
+         ctx.fillStyle = "rgba(121,180,76,.18)";
+         ctx.arc(0, 0, 36, 0, Math.PI * 2);
+         ctx.fill();
+
+         ctx.fillStyle = "#D5A847";
+         ctx.strokeStyle = "#8A5A20";
+         ctx.lineWidth = 2;
+         roundRect(-30, -9, 60, 18, 8, true, true);
+
+         ctx.fillStyle = "#123126";
+         ctx.beginPath();
+         ctx.moveTo(32, 0);
+         ctx.lineTo(51, -10);
+         ctx.lineTo(51, 10);
+         ctx.closePath();
+         ctx.fill();
+
+         ctx.fillStyle = "#D9EDB8";
+         ctx.fillRect(-36, -9, 11, 18);
+         ctx.restore();
+      }
+
+      function drawParticles(dt) {
+         for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+            p.vy += 80 * dt;
+            p.life -= dt;
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.fillStyle = p.color;
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 14;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            if (p.life <= 0) particles.splice(i, 1);
+         }
+         ctx.globalAlpha = 1;
+         ctx.shadowBlur = 0;
+      }
+
+      let lastFrame = performance.now();
+      function draw(now = performance.now()) {
+         const dt = Math.min(0.033, (now - lastFrame) / 1000 || 0.016);
+         lastFrame = now;
+         drawBackground();
+         segments.forEach((s, i) => drawSegment(s, i === step));
+         drawPencil();
+         drawParticles(dt);
+      }
+
+      function updateBars() {
+         const values = readInputs();
+         thumbVal.innerText = values.thumb.toFixed(2);
+         indexVal.innerText = values.index.toFixed(2);
+         ringVal.innerText = values.ring.toFixed(2);
+         pinkyVal.innerText = values.pinky.toFixed(2);
+
+         thumbFill.style.width = Math.round(values.thumb * 100) + "%";
+         indexFill.style.width = Math.round(values.index * 100) + "%";
+         ringFill.style.width = Math.round(values.ring * 100) + "%";
+         pinkyFill.style.width = Math.round(values.pinky * 100) + "%";
+
+         thumbRow.classList.toggle("active", values.thumb > 0.14);
+         indexRow.classList.toggle("active", values.index > 0.14);
+         ringRow.classList.toggle("active", values.ring > 0.14);
+         pinkyRow.classList.toggle("active", values.pinky > 0.14);
+      }
+      function updateUI() {
+         const total = segments.length || 1;
+         const progress = Math.round((step / total) * 100);
+         const acc = attempts === 0 ? 100 : Math.round((hits / attempts) * 100);
+
+         scoreEl.innerText = score;
+         comboEl.innerText = combo;
+         accuracyEl.innerText = acc + "%";
+         bestEl.innerText = best;
+         progressFill.style.width = progress + "%";
+         updateBars();
+      }
+
+      function loop(now) {
+         handleInput();
+         draw(now);
+         updateUI();
+         animationId = requestAnimationFrame(loop);
+      }
+
+      function connectWS() {
+         if (wsHandle && (wsHandle.readyState === WebSocket.OPEN || wsHandle.readyState === WebSocket.CONNECTING)) return;
+         try {
+            wsHandle = new WebSocket("ws://127.0.0.1:8765");
+         } catch (e) {
+            scheduleReconnect();
+            return;
+         }
+         wsHandle.onopen = () => {
+            dot.className = "dot ok";
+            statusText.innerText = "Glove connected";
+            modeText.innerText = "Live";
+            lastPacketAt = performance.now();
+         };
+         wsHandle.onclose = () => {
+            dot.className = "dot err";
+            statusText.innerText = "WebSocket disconnected";
+            modeText.innerText = "Retry";
+            scheduleReconnect();
+         };
+         wsHandle.onerror = () => {
+            dot.className = "dot err";
+            statusText.innerText = "WebSocket error";
+            modeText.innerText = "Check bridge";
+         };
+         wsHandle.onmessage = (event) => {
+            try {
+               const data = JSON.parse(event.data);
+               live = Object.assign(live, data);
+               if (live.pinky === undefined || live.pinky === null) live.pinky = live.middle || 0;
+               lastPacketAt = performance.now();
+
+               // one gesture start from intro
+               const values = readInputs();
+               if (!playing && !intro.classList.contains("hidden")) {
+                  if (Math.max(values.thumb, values.index, values.ring, values.pinky) > 0.30) resetGame();
+               }
+            } catch (e) { }
+         };
+      }
+      function scheduleReconnect() {
+         if (reconnectTimer) return;
+         reconnectTimer = setTimeout(() => {
+            reconnectTimer = null;
+            connectWS();
+         }, 1100);
+      }
+
+      document.addEventListener("keydown", (e) => {
+         if (e.code === "Space") {
+            resetGame();
+            return;
+         }
+         if (!playing) resetGame();
+         if (e.key === "ArrowUp") judge("thumb");
+         if (e.key === "ArrowRight") judge("index");
+         if (e.key === "ArrowDown") judge("ring");
+         if (e.key === "ArrowLeft") judge("pinky");
+      });
+
+      startBtn.addEventListener("click", resetGame);
+
+      buildLevelButtons();
+      segments = levels[currentLevel].maker();
+      connectWS();
+      draw();
+      updateUI();
+      loop();
+   </script>
+</body>
+
+</html>
